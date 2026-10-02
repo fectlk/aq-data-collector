@@ -1,130 +1,60 @@
-# AQI File Generation & Download Web App
+# FECT Sri Lanka Air Quality & Weather Data
 
-This project is a web application that allows users to view and download air quality index (AQI) files (maps and charts) generated from a scheduled task. The files are stored in a GitHub repository and can be downloaded directly from the web interface.
+Open dataset and live map of air quality (US AQI, PM2.5, PM10, ozone, NO₂, SO₂, CO) and weather
+for 28 cities across all 9 provinces of Sri Lanka. Built for [FECT](https://github.com/fectlk).
 
-## Features
-- **Automated File Generation**: AQI files for Sri Lanka (charts and maps) are automatically generated and stored in a GitHub repository daily.
-- **File Listing**: The app dynamically fetches and lists files stored in two folders on GitHub: `maps` and `charts`.
-- **File Selection**: Users can select files they wish to download using checkboxes.
-- **File Download**: Users can download selected files directly from the GitHub repository with a single click.
+**Live map:** `https://fectlk.github.io/iqair-data-scraper/`
 
-## Folder Structure
+## How it works
 
-- **maps/**: Contains generated map files in HTML format for AQI data visualization.
-- **charts/**: Contains generated chart files in Excel format containing AQI data for all cities and most polluted cities in Sri Lanka.
+| Step | What | Schedule (Sri Lanka time) |
+|------|------|---------------------------|
+| Collect | GitHub Actions calls the [Open-Meteo](https://open-meteo.com/) API (2 requests for all cities) and appends rows to `data/YYYY-MM.csv` | every 3 hours |
+| Map | Rebuilds `docs/index.html` (one file, overwritten, published with GitHub Pages) | after each collection |
+| Report | Weekly Excel summary in `reports/` | Mondays 08:00 |
 
-## Technologies Used
+No web scraping and no API key. The old IQAir page scraper was replaced after the source blocked it.
+Old files are kept in `archive/`.
 
-- **Python**: For generating AQI data, maps, and charts.
-- **JavaScript**: For handling client-side interactions (file listing and downloading).
-- **GitHub API**: To list files from the GitHub repository.
-- **Vercel / Netlify**: To host the web app.
+## Data
 
-## Setup & Installation
+`data/YYYY-MM.csv`, one row per city per observation.
 
-1. **Clone the Repository**
+| Column | Meaning |
+|--------|---------|
+| `collected_at` / `observed_at` | when we fetched / when the source measured (Sri Lanka time) |
+| `province`, `city`, `lat`, `lon` | location |
+| `us_aqi` | US Air Quality Index |
+| `pm2_5`, `pm10`, `ozone`, `nitrogen_dioxide`, `sulphur_dioxide`, `carbon_monoxide` | µg/m³ |
+| `temperature_2m` (°C), `relative_humidity_2m` (%), `precipitation` (mm), `wind_speed_10m` (km/h), `weather_code` | weather |
 
-   Clone the repository to your local machine:
+> Open-Meteo air quality values are **model-based estimates** (CAMS), not readings from physical
+> monitors. Treat them as indicative.
 
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   cd YOUR_REPO_NAME
-   ```
+## Run locally
 
-2. **Setup Python Environment**
+```bash
+pip install -r requirements.txt
+python -m fect_weather collect   # fetch and append data
+python -m fect_weather map       # build docs/index.html
+python -m fect_weather report    # last week's Excel summary
+```
 
-   - Install the required Python libraries by running the following command:
+Add or remove cities in `config/cities.csv` (`province,city,lat,lon`).
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Develop
 
-   The dependencies include:
-   - `requests`
-   - `beautifulsoup4`
-   - `pandas`
-   - `folium`
-   - `geopy`
-   - `openpyxl`
+```bash
+pip install -r requirements-dev.txt
+ruff check . && pytest
+```
 
-3. **Set Up GitHub Actions**
+## Setup (one time)
 
-   - The repository includes a GitHub Action defined in `.github/workflows/aqi_generator.yml` that runs daily at 12:00 PM to scrape the latest AQI data and generate the required files (maps and charts).
-   - The generated files are stored in two folders (`maps` and `charts`) in the GitHub repository.
+1. Repo → **Settings → Pages** → Source: *Deploy from a branch* → `main` / `/docs`.
+2. Repo → **Settings → Actions → General** → Workflow permissions: *Read and write*.
+3. **Actions → Collect AQI data → Run workflow** to test.
 
-4. **Deploy the Web App**
+## Credits & license
 
-   - You can deploy the web app to either **Vercel** or **Netlify**. Both services provide an easy way to deploy static sites by connecting your GitHub repository.
-   
-   - **For Vercel**:
-     - Sign up for a Vercel account if you don't have one.
-     - Connect your GitHub repository to Vercel.
-     - Deploy the site by selecting the project from your dashboard.
-
-   - **For Netlify**:
-     - Sign up for a Netlify account.
-     - Connect your GitHub repository to Netlify.
-     - Deploy the site by selecting the project from your dashboard.
-
-5. **Web App Functionality**
-
-   - The web app automatically displays a list of files (charts and maps) stored in your GitHub repository.
-   - Users can view the file names, select the files using checkboxes, and download the selected files by clicking the "Download Selected Files" button.
-
-## How It Works
-
-### Automated File Generation (GitHub Actions)
-
-1. **Scheduled Task**: A GitHub Action runs every day at 12:00 PM to fetch the latest AQI data for Sri Lanka from the IQAir website.
-2. **File Creation**:
-   - **Charts**: The AQI data is saved in Excel files with two sheets: "All Cities" and "Most Polluted Cities."
-   - **Maps**: A map showing the locations of the most polluted cities in Sri Lanka is generated and saved as an HTML file.
-3. **File Upload**: The generated files are automatically uploaded to the `maps` and `charts` folders in the GitHub repository.
-
-### Web App
-
-1. The **index.html** page loads when accessed.
-2. **Fetching Files**: The app uses the GitHub API to fetch files from the `maps` and `charts` folders in your GitHub repository.
-3. **Displaying Files**: The app displays the files as checkboxes under "Maps" and "Charts" sections.
-4. **Downloading Files**: Users can select files using the checkboxes and download them directly by clicking the "Download Selected Files" button.
-
-### Example of GitHub API File List
-
-The files in your repository's `maps` and `charts` folders are fetched via the GitHub API. For each file, the `download_url` is used to generate a direct download link.
-
-## GitHub Repository Setup
-
-### GitHub API Permissions
-
-The app fetches files from the GitHub repository using the GitHub API. To ensure the app has access to the repository, make sure:
-
-- The repository is **public** (or private with appropriate API access tokens configured).
-  
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-### Notes for Developers
-
-- **Future Enhancements**:
-  - Consider adding features like file preview (for charts), real-time updates, or filtering files by date or name.
-  - You could also extend the GitHub Action to send email notifications once new files are generated.
-  
-- **Security**:
-  - If the repository is private, use GitHub API tokens with restricted access instead of public access.
-
----
-
-## How the Map Works
-
-- 📍 Cities with highest AQI in each province are marked on Sri Lanka.
-- 🎨 Color-coded AQI levels:
-
-- 🟢 Green (0-50) → Good
-- 🟡 Yellow (51-100) → Moderate
-- 🟠 Orange (101-150) → Unhealthy for Sensitive Groups
-- 🔴 Red (151-200) → Unhealthy
-- 🟣 Purple (201-300) → Very Unhealthy
-- 🟤 Maroon (301+) → Hazardous
+Data: [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0, non-commercial use). Code: MIT.

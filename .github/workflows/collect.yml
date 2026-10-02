@@ -1,0 +1,34 @@
+name: Collect AQI data
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # every 3 hours (UTC), off the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m fect_weather collect
+      - run: python -m fect_weather map
+      - name: Commit changes
+        run: |
+          git config user.name "fect-bot"
+          git config user.email "fect-bot@users.noreply.github.com"
+          git add data docs
+          git diff --cached --quiet || git commit -m "data: AQI update $(TZ=Asia/Colombo date +'%Y-%m-%d %H:%M') SLST"
+          git pull --rebase
+          git push
