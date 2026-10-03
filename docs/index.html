@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_5bca8d9dbbbcc0d55e806eb76bfe8b6f {
+                #map_2a9a0b325f0c7838162e6af14ae113f9 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -53,16 +53,16 @@
 </head>
 <body>
     
-    <div style='position:fixed;bottom:8px;left:8px;z-index:9999;background:#fff;padding:6px 10px;font:12px Arial;border-radius:6px'>FECT Sri Lanka AQI &middot; updated 2026-10-03 03:45 (SLST) &middot; Data: <a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0)</div>
+    <div style='position:fixed;bottom:8px;left:8px;z-index:9999;background:#fff;padding:6px 10px;font:12px Arial;border-radius:6px'>FECT Sri Lanka AQI &middot; updated 2026-10-03 10:49 (SLST) &middot; Data: <a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0)</div>
     
-            <div class="folium-map" id="map_5bca8d9dbbbcc0d55e806eb76bfe8b6f" ></div>
+            <div class="folium-map" id="map_2a9a0b325f0c7838162e6af14ae113f9" ></div>
         
 </body>
 <script>
     
     
-            var map_5bca8d9dbbbcc0d55e806eb76bfe8b6f = L.map(
-                "map_5bca8d9dbbbcc0d55e806eb76bfe8b6f",
+            var map_2a9a0b325f0c7838162e6af14ae113f9 = L.map(
+                "map_2a9a0b325f0c7838162e6af14ae113f9",
                 {
                     center: [7.8731, 80.7718],
                     crs: L.CRS.EPSG3857,
@@ -79,7 +79,7 @@
 
         
     
-            var tile_layer_3e3a3e498edb1ca8ad4915da31a4a6e7 = L.tileLayer(
+            var tile_layer_24bd1bcab2176e0bea39e223363f40c4 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -96,297 +96,17 @@
             );
         
     
-            tile_layer_3e3a3e498edb1ca8ad4915da31a4a6e7.addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            tile_layer_24bd1bcab2176e0bea39e223363f40c4.addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var marker_067505e889140f77d1990a9ecc27b1cf = L.marker(
-                [7.2975, 81.682],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_7e524554a3c8adb44d6f0202a9f1a476 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e66\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_067505e889140f77d1990a9ecc27b1cf.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Ampara</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>66</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 15.3 &micro;g/m&sup3; &middot; 25.7&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_067505e889140f77d1990a9ecc27b1cf.setIcon(div_icon_7e524554a3c8adb44d6f0202a9f1a476);
-            
-    
-            var marker_220c69ab2679a0df95081cb9efd34542 = L.marker(
+            var marker_b7ce33ff08de9f7a1e6b3a14d7877050 = L.marker(
                 [9.2671, 80.8142],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_1f3ef8aec10ac94c2d984356d2ddca63 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e58\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_220c69ab2679a0df95081cb9efd34542.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Mullaitivu</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>58</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.2 &micro;g/m&sup3; &middot; 27.6&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_220c69ab2679a0df95081cb9efd34542.setIcon(div_icon_1f3ef8aec10ac94c2d984356d2ddca63);
-            
-    
-            var marker_7759068ba83293d6fd2e3aab37d25f63 = L.marker(
-                [8.5874, 81.2152],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_03d8a46bcd6020ad6627e3fce7bb2d3c = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e59\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_7759068ba83293d6fd2e3aab37d25f63.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Trincomalee</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>59</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.7 &micro;g/m&sup3; &middot; 26.7&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_7759068ba83293d6fd2e3aab37d25f63.setIcon(div_icon_03d8a46bcd6020ad6627e3fce7bb2d3c);
-            
-    
-            var marker_b5a69308cbc717493ddde3af0f6559fe = L.marker(
-                [7.7102, 81.6924],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_cf4e8c33b5247dc76fe1b9796a0b973f = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e61\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_b5a69308cbc717493ddde3af0f6559fe.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Batticaloa</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 15.4 &micro;g/m&sup3; &middot; 26.6&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_b5a69308cbc717493ddde3af0f6559fe.setIcon(div_icon_cf4e8c33b5247dc76fe1b9796a0b973f);
-            
-    
-            var marker_bd57d6aad463d9d71cec8d3d322dc6c2 = L.marker(
-                [7.4863, 80.3623],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_c687dd911ec1c3c684ebbf285ba2a0db = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e82\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_bd57d6aad463d9d71cec8d3d322dc6c2.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kurunegala</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>82</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.5 &micro;g/m&sup3; &middot; 23.3&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_bd57d6aad463d9d71cec8d3d322dc6c2.setIcon(div_icon_c687dd911ec1c3c684ebbf285ba2a0db);
-            
-    
-            var marker_023afec226d7e590d18a7ed53d3ea9f4 = L.marker(
-                [6.8728, 81.3507],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_a95f198c5ad00ac343017899efe80172 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e68\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_023afec226d7e590d18a7ed53d3ea9f4.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Monaragala</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>68</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 17.8 &micro;g/m&sup3; &middot; 23.5&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_023afec226d7e590d18a7ed53d3ea9f4.setIcon(div_icon_a95f198c5ad00ac343017899efe80172);
-            
-    
-            var marker_28eee977ccc7e3902f0354c53bcc4860 = L.marker(
-                [7.5758, 79.7953],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_cbda48045159b29b21d0fb92ccd1fdb2 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e61\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_28eee977ccc7e3902f0354c53bcc4860.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Chilaw</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.3 &micro;g/m&sup3; &middot; 24.1&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_28eee977ccc7e3902f0354c53bcc4860.setIcon(div_icon_cbda48045159b29b21d0fb92ccd1fdb2);
-            
-    
-            var marker_ed5a6e9f87ded3e1bc604e0fc9605bea = L.marker(
-                [8.3114, 80.4037],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_6670fee9e3c989cd64246e2de83f4753 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e68\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_ed5a6e9f87ded3e1bc604e0fc9605bea.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Anuradhapura</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>68</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 15.8 &micro;g/m&sup3; &middot; 24.3&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_ed5a6e9f87ded3e1bc604e0fc9605bea.setIcon(div_icon_6670fee9e3c989cd64246e2de83f4753);
-            
-    
-            var marker_33b54f1fb5a340289f31226aaee43d73 = L.marker(
-                [7.9403, 81.0188],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_843433bf62aca5c512879823017fb9aa = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e61\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_33b54f1fb5a340289f31226aaee43d73.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Polonnaruwa</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.6 &micro;g/m&sup3; &middot; 25.2&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_33b54f1fb5a340289f31226aaee43d73.setIcon(div_icon_843433bf62aca5c512879823017fb9aa);
-            
-    
-            var marker_f4028d1e44b5a16cbac8009f53956e3f = L.marker(
-                [6.9934, 81.055],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_083b37733aeeaa7056a01011934f3689 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e68\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_f4028d1e44b5a16cbac8009f53956e3f.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Badulla</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>68</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 17.8 &micro;g/m&sup3; &middot; 20.7&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_f4028d1e44b5a16cbac8009f53956e3f.setIcon(div_icon_083b37733aeeaa7056a01011934f3689);
-            
-    
-            var marker_260e4dceaf79ea7f52ea8491db760d0a = L.marker(
-                [9.3803, 80.377],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_0137aa1b77a9e09e4fd9aa0b64170666 = L.divIcon({
+            var div_icon_35dc7300ca495e8c2e3e653c959b22f5 = L.divIcon({
   "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e56\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
@@ -394,9 +114,9 @@
 });
         
     
-            marker_260e4dceaf79ea7f52ea8491db760d0a.bindTooltip(
+            marker_b7ce33ff08de9f7a1e6b3a14d7877050.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kilinochchi</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>56</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.6 &micro;g/m&sup3; &middot; 26.9&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Mullaitivu</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>56</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.0 &micro;g/m&sup3; &middot; 30.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -404,27 +124,27 @@
             );
         
     
-                marker_260e4dceaf79ea7f52ea8491db760d0a.setIcon(div_icon_0137aa1b77a9e09e4fd9aa0b64170666);
+                marker_b7ce33ff08de9f7a1e6b3a14d7877050.setIcon(div_icon_35dc7300ca495e8c2e3e653c959b22f5);
             
     
-            var marker_ab593dd640b0e79ae9438ad784db08f2 = L.marker(
-                [8.0408, 79.8394],
+            var marker_2c145cc8402818d84dfc40d00b9c9103 = L.marker(
+                [8.5874, 81.2152],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_093f8a19b9b0afe35eb27a2f5eea517b = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e67\u003c/div\u003e",
+            var div_icon_61131b940fa0f85ba9ddea4a9ca81391 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e57\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
   "className": "empty",
 });
         
     
-            marker_ab593dd640b0e79ae9438ad784db08f2.bindTooltip(
+            marker_2c145cc8402818d84dfc40d00b9c9103.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Puttalam</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>67</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.5 &micro;g/m&sup3; &middot; 24.5&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Trincomalee</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>57</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.0 &micro;g/m&sup3; &middot; 30.3&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -432,185 +152,17 @@
             );
         
     
-                marker_ab593dd640b0e79ae9438ad784db08f2.setIcon(div_icon_093f8a19b9b0afe35eb27a2f5eea517b);
+                marker_2c145cc8402818d84dfc40d00b9c9103.setIcon(div_icon_61131b940fa0f85ba9ddea4a9ca81391);
             
     
-            var marker_aa2555e591382b8e96f96f22a75e4946 = L.marker(
-                [8.981, 79.9044],
+            var marker_386ee57e3bbe1daf1a6927c902de2178 = L.marker(
+                [7.7102, 81.6924],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_82dafdd2c1c561eb3380967a63695b60 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e64\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_aa2555e591382b8e96f96f22a75e4946.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Mannar</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>64</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.3 &micro;g/m&sup3; &middot; 27.6&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_aa2555e591382b8e96f96f22a75e4946.setIcon(div_icon_82dafdd2c1c561eb3380967a63695b60);
-            
-    
-            var marker_0cec3bbb3382a9353fa43f9b87bb1d87 = L.marker(
-                [7.4675, 80.6234],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_5193321f0a3f44102d415bb817b346dc = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e71\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_0cec3bbb3382a9353fa43f9b87bb1d87.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Matale</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>71</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 19.2 &micro;g/m&sup3; &middot; 22.6&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_0cec3bbb3382a9353fa43f9b87bb1d87.setIcon(div_icon_5193321f0a3f44102d415bb817b346dc);
-            
-    
-            var marker_3d39517a06088f7725cd2b0bd289c1e1 = L.marker(
-                [9.6615, 80.0255],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_2831975abdfec5ecb472ee8d994fe399 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e60\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_3d39517a06088f7725cd2b0bd289c1e1.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Jaffna</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>60</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 11.4 &micro;g/m&sup3; &middot; 28.0&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_3d39517a06088f7725cd2b0bd289c1e1.setIcon(div_icon_2831975abdfec5ecb472ee8d994fe399);
-            
-    
-            var marker_e64173a4f7d548dc77945bc9e2480b93 = L.marker(
-                [6.1241, 81.1185],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_e6db2400963a548657dfb90cbe6acaca = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e64\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_e64173a4f7d548dc77945bc9e2480b93.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Hambantota</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>64</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.1 &micro;g/m&sup3; &middot; 25.1&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_e64173a4f7d548dc77945bc9e2480b93.setIcon(div_icon_e6db2400963a548657dfb90cbe6acaca);
-            
-    
-            var marker_586c35d2972b60bc294675087e5e6869 = L.marker(
-                [5.9549, 80.555],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_53e72b09ea5f9e71b76024e6bd93a378 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e65\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_586c35d2972b60bc294675087e5e6869.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Matara</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>65</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.9 &micro;g/m&sup3; &middot; 23.9&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_586c35d2972b60bc294675087e5e6869.setIcon(div_icon_53e72b09ea5f9e71b76024e6bd93a378);
-            
-    
-            var marker_7f5e3349d5354bcbc79d7a46314caf42 = L.marker(
-                [6.0535, 80.221],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_675754ebbcc7787392b60b1446686c54 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e65\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_7f5e3349d5354bcbc79d7a46314caf42.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Galle</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>65</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.9 &micro;g/m&sup3; &middot; 23.5&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_7f5e3349d5354bcbc79d7a46314caf42.setIcon(div_icon_675754ebbcc7787392b60b1446686c54);
-            
-    
-            var marker_ea1d698b4a390a1952202b5db4bbbd8b = L.marker(
-                [6.9497, 80.7891],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_fd243b867b41c6efbe8fc2d32f9d8ee7 = L.divIcon({
+            var div_icon_231024cd798fdb534f840180ceba11d9 = L.divIcon({
   "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e61\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
@@ -618,9 +170,9 @@
 });
         
     
-            marker_ea1d698b4a390a1952202b5db4bbbd8b.bindTooltip(
+            marker_386ee57e3bbe1daf1a6927c902de2178.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Nuwara Eliya</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 9.7 &micro;g/m&sup3; &middot; 13.5&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Batticaloa</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.7 &micro;g/m&sup3; &middot; 32.3&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -628,101 +180,17 @@
             );
         
     
-                marker_ea1d698b4a390a1952202b5db4bbbd8b.setIcon(div_icon_fd243b867b41c6efbe8fc2d32f9d8ee7);
+                marker_386ee57e3bbe1daf1a6927c902de2178.setIcon(div_icon_231024cd798fdb534f840180ceba11d9);
             
     
-            var marker_ab9990b4e7997ff0868eb22759aacc1a = L.marker(
-                [7.2906, 80.6337],
+            var marker_13c31d8f233e8edca0acfe8d55e1d133 = L.marker(
+                [7.2975, 81.682],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_d5f1847762137f5d1ea8ee8076b45464 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e73\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_ab9990b4e7997ff0868eb22759aacc1a.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kandy</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>73</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 19.3 &micro;g/m&sup3; &middot; 21.3&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_ab9990b4e7997ff0868eb22759aacc1a.setIcon(div_icon_d5f1847762137f5d1ea8ee8076b45464);
-            
-    
-            var marker_e931eb4bbf0832677cc9a5e0d4570fac = L.marker(
-                [6.773, 79.8816],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_a0db29f15ff7f7d878307aeb55f62d9a = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e70\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_e931eb4bbf0832677cc9a5e0d4570fac.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Moratuwa</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>70</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 6.2 &micro;g/m&sup3; &middot; 24.1&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_e931eb4bbf0832677cc9a5e0d4570fac.setIcon(div_icon_a0db29f15ff7f7d878307aeb55f62d9a);
-            
-    
-            var marker_9606054c4acc6d2812d8984276d96244 = L.marker(
-                [7.0917, 79.9999],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_6938f85867484960d6779024d5a655a0 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e78\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_9606054c4acc6d2812d8984276d96244.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Gampaha</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>78</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 5.8 &micro;g/m&sup3; &middot; 23.9&deg;C<br>Observed 2026-10-03T03:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_9606054c4acc6d2812d8984276d96244.setIcon(div_icon_6938f85867484960d6779024d5a655a0);
-            
-    
-            var marker_74f560713125905c014b74f07e73db7f = L.marker(
-                [6.5854, 79.9607],
-                {
-}
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
-        
-    
-            var div_icon_b8c124c104ad8095b6cd40f4ca361dda = L.divIcon({
+            var div_icon_a53886188c544a9abe4e9528f3caaf02 = L.divIcon({
   "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e63\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
@@ -730,9 +198,9 @@
 });
         
     
-            marker_74f560713125905c014b74f07e73db7f.bindTooltip(
+            marker_13c31d8f233e8edca0acfe8d55e1d133.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kalutara</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>63</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 9.0 &micro;g/m&sup3; &middot; 23.6&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Ampara</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>63</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 11.8 &micro;g/m&sup3; &middot; 33.0&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -740,27 +208,27 @@
             );
         
     
-                marker_74f560713125905c014b74f07e73db7f.setIcon(div_icon_b8c124c104ad8095b6cd40f4ca361dda);
+                marker_13c31d8f233e8edca0acfe8d55e1d133.setIcon(div_icon_a53886188c544a9abe4e9528f3caaf02);
             
     
-            var marker_da4072ec790532a7961c9be67012d31c = L.marker(
-                [7.2008, 79.8737],
+            var marker_c3e86bd20fa7b5f6473ef219ed647272 = L.marker(
+                [7.4863, 80.3623],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_4d8a854b21c77bb765e3036b102938ef = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e78\u003c/div\u003e",
+            var div_icon_c152743fa9a5f031833a1b0468fe4f8a = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e71\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
   "className": "empty",
 });
         
     
-            marker_da4072ec790532a7961c9be67012d31c.bindTooltip(
+            marker_c3e86bd20fa7b5f6473ef219ed647272.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Negombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>78</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 5.8 &micro;g/m&sup3; &middot; 24.0&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Kurunegala</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>71</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.7 &micro;g/m&sup3; &middot; 30.5&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -768,27 +236,27 @@
             );
         
     
-                marker_da4072ec790532a7961c9be67012d31c.setIcon(div_icon_4d8a854b21c77bb765e3036b102938ef);
+                marker_c3e86bd20fa7b5f6473ef219ed647272.setIcon(div_icon_c152743fa9a5f031833a1b0468fe4f8a);
             
     
-            var marker_41998561528206147de99f765983eca3 = L.marker(
-                [6.9271, 79.8612],
+            var marker_1ba08226c6099ff104d47ca46fdab6f8 = L.marker(
+                [8.3114, 80.4037],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_528eacdde0c48db20c882a4d57cb1002 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e70\u003c/div\u003e",
+            var div_icon_031269724af36c23e9bd864c039477e2 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e62\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
   "className": "empty",
 });
         
     
-            marker_41998561528206147de99f765983eca3.bindTooltip(
+            marker_1ba08226c6099ff104d47ca46fdab6f8.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Colombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>70</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 6.2 &micro;g/m&sup3; &middot; 24.2&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Anuradhapura</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>62</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 14.3 &micro;g/m&sup3; &middot; 30.9&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -796,17 +264,73 @@
             );
         
     
-                marker_41998561528206147de99f765983eca3.setIcon(div_icon_528eacdde0c48db20c882a4d57cb1002);
+                marker_1ba08226c6099ff104d47ca46fdab6f8.setIcon(div_icon_031269724af36c23e9bd864c039477e2);
             
     
-            var marker_e767d194f7297f54b30674a4031c21ef = L.marker(
-                [6.7056, 80.3847],
+            var marker_6b08a1cf52bb0ce1f061ba6903251f5b = L.marker(
+                [7.5758, 79.7953],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_6461e691d878bd53c4b436bc219dd75a = L.divIcon({
+            var div_icon_06ba1615f842ebf6e1418d02f1830c70 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e57\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_6b08a1cf52bb0ce1f061ba6903251f5b.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Chilaw</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>57</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.6 &micro;g/m&sup3; &middot; 30.1&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6b08a1cf52bb0ce1f061ba6903251f5b.setIcon(div_icon_06ba1615f842ebf6e1418d02f1830c70);
+            
+    
+            var marker_79ba65d9e27f22e76b7584861640acc2 = L.marker(
+                [7.9403, 81.0188],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_212d9ffb8b588f45209edb000b712870 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e59\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_79ba65d9e27f22e76b7584861640acc2.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Polonnaruwa</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>59</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.9 &micro;g/m&sup3; &middot; 32.0&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_79ba65d9e27f22e76b7584861640acc2.setIcon(div_icon_212d9ffb8b588f45209edb000b712870);
+            
+    
+            var marker_525410c87bbe95a032ba099ffbfe4daa = L.marker(
+                [6.9934, 81.055],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_0a901836c018facc8b008f5f3645220c = L.divIcon({
   "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e64\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
@@ -814,9 +338,9 @@
 });
         
     
-            marker_e767d194f7297f54b30674a4031c21ef.bindTooltip(
+            marker_525410c87bbe95a032ba099ffbfe4daa.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Ratnapura</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>64</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 6.5 &micro;g/m&sup3; &middot; 24.1&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Badulla</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>64</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.8 &micro;g/m&sup3; &middot; 29.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -824,17 +348,73 @@
             );
         
     
-                marker_e767d194f7297f54b30674a4031c21ef.setIcon(div_icon_6461e691d878bd53c4b436bc219dd75a);
+                marker_525410c87bbe95a032ba099ffbfe4daa.setIcon(div_icon_0a901836c018facc8b008f5f3645220c);
             
     
-            var marker_f80b843128e1d22a1e805d40f4c6f413 = L.marker(
-                [8.7514, 80.4971],
+            var marker_031235dbb57c6108bf7ecab769948200 = L.marker(
+                [6.8728, 81.3507],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_7f06954dedd80eec02f99e11ef0973e1 = L.divIcon({
+            var div_icon_bcc560d950e6cb39f764a37c76c89eff = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e64\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_031235dbb57c6108bf7ecab769948200.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Monaragala</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>64</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.8 &micro;g/m&sup3; &middot; 31.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_031235dbb57c6108bf7ecab769948200.setIcon(div_icon_bcc560d950e6cb39f764a37c76c89eff);
+            
+    
+            var marker_33fd77ea70623649b829d24e9bf3b7c9 = L.marker(
+                [9.3803, 80.377],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_06482779c16e6f1745bb34eb97a4fbe5 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e53\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_33fd77ea70623649b829d24e9bf3b7c9.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Kilinochchi</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>53</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 9.9 &micro;g/m&sup3; &middot; 33.0&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_33fd77ea70623649b829d24e9bf3b7c9.setIcon(div_icon_06482779c16e6f1745bb34eb97a4fbe5);
+            
+    
+            var marker_6ba9013023eec051b37b036de2c40bfc = L.marker(
+                [8.0408, 79.8394],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_4fc75ed5ba58e01d33d92f6d5d05b9ad = L.divIcon({
   "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e60\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
@@ -842,9 +422,9 @@
 });
         
     
-            marker_f80b843128e1d22a1e805d40f4c6f413.bindTooltip(
+            marker_6ba9013023eec051b37b036de2c40bfc.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Vavuniya</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>60</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.2 &micro;g/m&sup3; &middot; 25.0&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Puttalam</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>60</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 9.6 &micro;g/m&sup3; &middot; 31.6&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -852,27 +432,27 @@
             );
         
     
-                marker_f80b843128e1d22a1e805d40f4c6f413.setIcon(div_icon_7f06954dedd80eec02f99e11ef0973e1);
+                marker_6ba9013023eec051b37b036de2c40bfc.setIcon(div_icon_4fc75ed5ba58e01d33d92f6d5d05b9ad);
             
     
-            var marker_c5c3002d3e67ad7a7ae0e9198be8f28a = L.marker(
-                [7.2513, 80.3464],
+            var marker_0daf1154220bd59fcf8ce42fa75e9e47 = L.marker(
+                [8.981, 79.9044],
                 {
 }
-            ).addTo(map_5bca8d9dbbbcc0d55e806eb76bfe8b6f);
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
         
     
-            var div_icon_119a7a135855bb338166db35f863df42 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e84\u003c/div\u003e",
+            var div_icon_b9e870a81fede4b40a76bed8df483c38 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e61\u003c/div\u003e",
   "iconSize": [32, 32],
   "iconAnchor": [16, 16],
   "className": "empty",
 });
         
     
-            marker_c5c3002d3e67ad7a7ae0e9198be8f28a.bindTooltip(
+            marker_0daf1154220bd59fcf8ce42fa75e9e47.bindTooltip(
                 `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kegalle</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>84</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.2 &micro;g/m&sup3; &middot; 23.8&deg;C<br>Observed 2026-10-03T03:30</small></div>
+                     <div style='font-family:Arial;width:220px'><b>Mannar</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>61</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.8 &micro;g/m&sup3; &middot; 30.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
                  </div>`,
                 {
   "sticky": true,
@@ -880,7 +460,427 @@
             );
         
     
-                marker_c5c3002d3e67ad7a7ae0e9198be8f28a.setIcon(div_icon_119a7a135855bb338166db35f863df42);
+                marker_0daf1154220bd59fcf8ce42fa75e9e47.setIcon(div_icon_b9e870a81fede4b40a76bed8df483c38);
+            
+    
+            var marker_2f71beabd2cbaf0b58a6dfc4d1b65776 = L.marker(
+                [7.4675, 80.6234],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_c552921a73be2740e1600dd51cfb1be0 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e65\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_2f71beabd2cbaf0b58a6dfc4d1b65776.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Matale</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>65</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.2 &micro;g/m&sup3; &middot; 30.1&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2f71beabd2cbaf0b58a6dfc4d1b65776.setIcon(div_icon_c552921a73be2740e1600dd51cfb1be0);
+            
+    
+            var marker_e33869e8528e6be311caf2c3ea5680bb = L.marker(
+                [9.6615, 80.0255],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_2b0a44c2a31b9814b742b4cd5dc0ba39 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e59\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_e33869e8528e6be311caf2c3ea5680bb.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Jaffna</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>59</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 11.9 &micro;g/m&sup3; &middot; 31.1&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e33869e8528e6be311caf2c3ea5680bb.setIcon(div_icon_2b0a44c2a31b9814b742b4cd5dc0ba39);
+            
+    
+            var marker_c48d0af5b3519e5e85e97723638a8a82 = L.marker(
+                [6.1241, 81.1185],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_1e1a4865bdd8d08aad8571306149fc0b = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e60\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_c48d0af5b3519e5e85e97723638a8a82.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Hambantota</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>60</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.4 &micro;g/m&sup3; &middot; 29.9&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c48d0af5b3519e5e85e97723638a8a82.setIcon(div_icon_1e1a4865bdd8d08aad8571306149fc0b);
+            
+    
+            var marker_952d1d96fd40999ba3297505fe11581e = L.marker(
+                [5.9549, 80.555],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_865be02d1108121363bad426e7ada514 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e63\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_952d1d96fd40999ba3297505fe11581e.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Matara</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>63</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 14.0 &micro;g/m&sup3; &middot; 29.9&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_952d1d96fd40999ba3297505fe11581e.setIcon(div_icon_865be02d1108121363bad426e7ada514);
+            
+    
+            var marker_fff31b715bfd78642b595e5b9a7de2a4 = L.marker(
+                [6.0535, 80.221],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_42e3837e76532605170ba64f67fa3be3 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e63\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_fff31b715bfd78642b595e5b9a7de2a4.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Galle</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>63</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 14.0 &micro;g/m&sup3; &middot; 29.7&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fff31b715bfd78642b595e5b9a7de2a4.setIcon(div_icon_42e3837e76532605170ba64f67fa3be3);
+            
+    
+            var marker_549dfa42275bfac04cd2e745ed620ce4 = L.marker(
+                [6.7056, 80.3847],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_bdb1db39194b0b34bfe1d602c032c877 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e55\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_549dfa42275bfac04cd2e745ed620ce4.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Ratnapura</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>55</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.3 &micro;g/m&sup3; &middot; 31.1&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_549dfa42275bfac04cd2e745ed620ce4.setIcon(div_icon_bdb1db39194b0b34bfe1d602c032c877);
+            
+    
+            var marker_68ea195568de4b184935cd4124b1a552 = L.marker(
+                [6.9497, 80.7891],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_f059086e141be8681f6b754c5b5bd09e = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e54\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_68ea195568de4b184935cd4124b1a552.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Nuwara Eliya</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>54</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 8.5 &micro;g/m&sup3; &middot; 21.6&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_68ea195568de4b184935cd4124b1a552.setIcon(div_icon_f059086e141be8681f6b754c5b5bd09e);
+            
+    
+            var marker_003a2f3cf8703326428da8aed034ecef = L.marker(
+                [7.2906, 80.6337],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_62fb9cb21fd1cbf2dc13fa6eb2dd8103 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e67\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_003a2f3cf8703326428da8aed034ecef.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Kandy</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>67</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 11.7 &micro;g/m&sup3; &middot; 29.0&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_003a2f3cf8703326428da8aed034ecef.setIcon(div_icon_62fb9cb21fd1cbf2dc13fa6eb2dd8103);
+            
+    
+            var marker_e449a79edfed272a18d0408189a11208 = L.marker(
+                [6.773, 79.8816],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_0a081f6d17015c39e5e0ea334d8541e9 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e62\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_e449a79edfed272a18d0408189a11208.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Moratuwa</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>62</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 18.9 &micro;g/m&sup3; &middot; 29.6&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e449a79edfed272a18d0408189a11208.setIcon(div_icon_0a081f6d17015c39e5e0ea334d8541e9);
+            
+    
+            var marker_7356174f626c45ab6d2d88669a3d79ef = L.marker(
+                [7.0917, 79.9999],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_fb631cab3ae34fa1968bc10c75a0295d = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e69\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_7356174f626c45ab6d2d88669a3d79ef.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Gampaha</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>69</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 18.2 &micro;g/m&sup3; &middot; 30.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7356174f626c45ab6d2d88669a3d79ef.setIcon(div_icon_fb631cab3ae34fa1968bc10c75a0295d);
+            
+    
+            var marker_a7fe2829e9f7e2d9bd401f8081997c96 = L.marker(
+                [6.5854, 79.9607],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_e0424fb819185444c3e9cab256eb7a55 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e57\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_a7fe2829e9f7e2d9bd401f8081997c96.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Kalutara</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>57</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 12.9 &micro;g/m&sup3; &middot; 29.5&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a7fe2829e9f7e2d9bd401f8081997c96.setIcon(div_icon_e0424fb819185444c3e9cab256eb7a55);
+            
+    
+            var marker_f52e6d06f360fce7498c8d2defb0766f = L.marker(
+                [7.2008, 79.8737],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_864254b5d6f95146dde35965a026ef5c = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e69\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_f52e6d06f360fce7498c8d2defb0766f.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Negombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>69</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 18.2 &micro;g/m&sup3; &middot; 29.8&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f52e6d06f360fce7498c8d2defb0766f.setIcon(div_icon_864254b5d6f95146dde35965a026ef5c);
+            
+    
+            var marker_f4dc487c1dde2f4a769c0a5846fff34a = L.marker(
+                [6.9271, 79.8612],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_bd37e61748bf24fa08d00779b04c7a38 = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e62\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_f4dc487c1dde2f4a769c0a5846fff34a.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Colombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>62</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 18.9 &micro;g/m&sup3; &middot; 29.3&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f4dc487c1dde2f4a769c0a5846fff34a.setIcon(div_icon_bd37e61748bf24fa08d00779b04c7a38);
+            
+    
+            var marker_0dd6c4cdf2f15599de8bb6b91b887444 = L.marker(
+                [8.7514, 80.4971],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_94491977b59c1208b7089f893443c86c = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e56\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_0dd6c4cdf2f15599de8bb6b91b887444.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Vavuniya</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>56</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 11.6 &micro;g/m&sup3; &middot; 32.1&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0dd6c4cdf2f15599de8bb6b91b887444.setIcon(div_icon_94491977b59c1208b7089f893443c86c);
+            
+    
+            var marker_a6b74070334e4673391a9c81b1851741 = L.marker(
+                [7.2513, 80.3464],
+                {
+}
+            ).addTo(map_2a9a0b325f0c7838162e6af14ae113f9);
+        
+    
+            var div_icon_2751e02fc7e7974d86fe352797fc4dbe = L.divIcon({
+  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e69\u003c/div\u003e",
+  "iconSize": [32, 32],
+  "iconAnchor": [16, 16],
+  "className": "empty",
+});
+        
+    
+            marker_a6b74070334e4673391a9c81b1851741.bindTooltip(
+                `<div>
+                     <div style='font-family:Arial;width:220px'><b>Kegalle</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>69</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 13.5 &micro;g/m&sup3; &middot; 30.4&deg;C<br>Observed 2026-10-03T10:30</small></div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a6b74070334e4673391a9c81b1851741.setIcon(div_icon_2751e02fc7e7974d86fe352797fc4dbe);
             
 </script>
 </html>
