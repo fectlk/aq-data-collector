@@ -166,7 +166,7 @@ window.addEventListener("load",function(){
  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {attribution:"&copy; OpenStreetMap contributors",maxZoom:19}).addTo(map2);
  tag(map,"Model estimates &middot; Open-Meteo");
- tag(map2,IQ.stations.length?"Monitoring data &middot; IQAir":"IQAir: no data yet");
+ tag(map2,IQ.stations.length?"City data &middot; IQAir":"IQAir: no data yet");
  const layer=L.layerGroup().addTo(map), layer2=L.layerGroup().addTo(map2);
  const stamp=document.getElementById("stamp"), nav=document.getElementById("nav");
  const buttons=[];

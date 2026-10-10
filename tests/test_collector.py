@@ -90,36 +90,70 @@ class _Resp:
         return self._body
 
 
+def _city_body(city, state, lon, lat, aqi):
+    return {"status": "success", "data": {
+        "city": city, "state": state, "country": "Sri Lanka",
+        "location": {"type": "Point", "coordinates": [lon, lat]},
+        "current": {
+            "pollution": {"ts": "2026-10-10T09:00:00.000Z", "aqius": aqi, "mainus": "p2"},
+            "weather": {"ts": "2026-10-10T09:00:00.000Z", "tp": 29, "hu": 80,
+                        "ws": 3, "pr": 1008}}}}
+
+
 class _FakeIQAir:
-    """Every location answers with the same IQAir city (like several towns -> Colombo)."""
+    """Fake IQAir API. discovery=False makes states/cities fail (permission-style error)."""
+
+    def __init__(self, discovery=True):
+        self.discovery = discovery
+        self.calls = []
 
     def get(self, url, params=None, timeout=None):
-        return _Resp({"status": "success", "data": {
-            "city": "Colombo", "state": "Western Province", "country": "Sri Lanka",
-            "location": {"type": "Point", "coordinates": [79.86, 6.93]},
-            "current": {
-                "pollution": {"ts": "2026-10-10T09:00:00.000Z", "aqius": 71, "mainus": "p2"},
-                "weather": {"ts": "2026-10-10T09:00:00.000Z", "tp": 29, "hu": 80,
-                            "ws": 3, "pr": 1008}}}})
+        ep = url.rsplit("/", 1)[1]
+        self.calls.append(ep)
+        if ep in ("states", "cities") and not self.discovery:
+            return _Resp({"status": "fail", "data": {"message": "permission_denied"}})
+        if ep == "states":
+            return _Resp({"status": "success",
+                          "data": [{"state": "Western Province"}, {"state": "Central"}]})
+        if ep == "cities":
+            names = {"Western Province": ["Colombo", "Negombo"], "Central": ["Kandy"]}
+            return _Resp({"status": "success",
+                          "data": [{"city": c} for c in names[params["state"]]]})
+        if ep == "city":
+            return _Resp(_city_body(params["city"], params["state"], 80.0, 7.0, 71))
+        return _Resp(_city_body("Colombo", "Western Province", 79.86, 6.93, 71))  # nearest_city
 
 
-def test_iqair_collect_dedupes_and_maps(tmp_path, monkeypatch):
+def test_iqair_discovers_cities_once_and_collects(tmp_path):
     from fect_weather.iqair import collect_iqair
 
-    monkeypatch.setattr(collector, "fetch_current", _fake_fetch)
+    cities = tmp_path / "cities.csv"
+    cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\n")
+    iq_file, iq = tmp_path / "iqair_cities.csv", tmp_path / "data" / "iqair"
+    api = _FakeIQAir()
+    kw = {"api_key": "x", "session": api, "delay": 0, "iqair_cities": iq_file}
+
+    assert collect_iqair(cities, iq, **kw) == 3
+    assert len(iq_file.read_text(encoding="utf-8").splitlines()) == 4  # header + 3 cities
+    assert collect_iqair(cities, iq, **kw) == 0  # same hour -> no duplicates
+    assert api.calls.count("states") == 1  # discovery is cached in the file
+
+
+def test_iqair_falls_back_to_nearest_city(tmp_path, monkeypatch):
+    from fect_weather.iqair import collect_iqair
+
     cities = tmp_path / "cities.csv"
     cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\nWestern,Negombo,7.2,79.8\n")
-    data = tmp_path / "data"
-    iq = data / "iqair"
+    iq = tmp_path / "data" / "iqair"
+    n = collect_iqair(cities, iq, api_key="x", session=_FakeIQAir(discovery=False),
+                      delay=0, iqair_cities=tmp_path / "none.csv")
+    assert n == 1  # both towns map to Colombo, stored once
+    assert not (tmp_path / "none.csv").exists()
 
-    assert collect_iqair(cities, iq, api_key="x", session=_FakeIQAir(), delay=0) == 1
-    assert collect_iqair(cities, iq, api_key="x", session=_FakeIQAir(), delay=0) == 0
-    with open(next(iq.glob("*.csv")), encoding="utf-8") as f:
-        row = next(csv.DictReader(f))
-    assert row["observed_at"] == "2026-10-10T14:30" and row["us_aqi"] == "71"
-
-    collector.collect(cities, data, session=object())
-    html = build_map(data, tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
+    monkeypatch.setattr(collector, "fetch_current", _fake_fetch)
+    collector.collect(cities, tmp_path / "data", session=object())
+    out = build_map(tmp_path / "data", tmp_path / "docs" / "index.html")
+    html = out.read_text(encoding="utf-8")
     assert 'id="map2"' in html and "Western Province" in html
 
 
