@@ -23,6 +23,11 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m fect_weather collect
+      - name: IQAir stations (optional, needs IQAIR_API_KEY secret)
+        run: python -m fect_weather iqair
+        continue-on-error: true
+        env:
+          IQAIR_API_KEY: ${{ secrets.IQAIR_API_KEY }}
       - run: python -m fect_weather prune
       - run: python -m fect_weather map
       - name: Commit changes

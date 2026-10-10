@@ -80,3 +80,44 @@ def test_map_has_sidebar_and_snapshots(tmp_path, monkeypatch):
     html = build_map(data, tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
     assert 'id="navlist"' in html and 'id="livebtn"' in html
     assert "2026-09-28T10:00" in html and "Colombo" in html
+
+
+class _Resp:
+    def __init__(self, body):
+        self._body = body
+
+    def json(self):
+        return self._body
+
+
+class _FakeIQAir:
+    """Every location answers with the same IQAir city (like several towns -> Colombo)."""
+
+    def get(self, url, params=None, timeout=None):
+        return _Resp({"status": "success", "data": {
+            "city": "Colombo", "state": "Western Province", "country": "Sri Lanka",
+            "location": {"type": "Point", "coordinates": [79.86, 6.93]},
+            "current": {
+                "pollution": {"ts": "2026-10-10T09:00:00.000Z", "aqius": 71, "mainus": "p2"},
+                "weather": {"ts": "2026-10-10T09:00:00.000Z", "tp": 29, "hu": 80,
+                            "ws": 3, "pr": 1008}}}})
+
+
+def test_iqair_collect_dedupes_and_maps(tmp_path, monkeypatch):
+    from fect_weather.iqair import collect_iqair
+
+    monkeypatch.setattr(collector, "fetch_current", _fake_fetch)
+    cities = tmp_path / "cities.csv"
+    cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\nWestern,Negombo,7.2,79.8\n")
+    data = tmp_path / "data"
+    iq = data / "iqair"
+
+    assert collect_iqair(cities, iq, api_key="x", session=_FakeIQAir(), delay=0) == 1
+    assert collect_iqair(cities, iq, api_key="x", session=_FakeIQAir(), delay=0) == 0
+    with open(next(iq.glob("*.csv")), encoding="utf-8") as f:
+        row = next(csv.DictReader(f))
+    assert row["observed_at"] == "2026-10-10T14:30" and row["us_aqi"] == "71"
+
+    collector.collect(cities, data, session=object())
+    html = build_map(data, tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
+    assert 'id="map2"' in html and "Western Province" in html
