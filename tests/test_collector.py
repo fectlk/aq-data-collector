@@ -121,3 +121,17 @@ def test_iqair_collect_dedupes_and_maps(tmp_path, monkeypatch):
     collector.collect(cities, data, session=object())
     html = build_map(data, tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
     assert 'id="map2"' in html and "Western Province" in html
+
+
+def test_collect_survives_weather_timeout(tmp_path, monkeypatch):
+    import requests
+
+    def fetch(session, url, cities, variables):
+        if url == collector.WEATHER_URL:
+            raise requests.ConnectionError("timed out")
+        return _fake_fetch(session, url, cities, variables)
+
+    monkeypatch.setattr(collector, "fetch_current", fetch)
+    cities = tmp_path / "cities.csv"
+    cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\n")
+    assert collector.collect(cities, tmp_path / "data", session=object()) == 1

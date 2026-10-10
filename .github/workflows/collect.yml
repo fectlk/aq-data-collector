@@ -22,7 +22,14 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m fect_weather collect
+      - name: Collect Open-Meteo data (3 tries)
+        run: |
+          for i in 1 2 3; do
+            python -m fect_weather collect && exit 0
+            echo "attempt $i failed"; sleep 60
+          done
+          exit 1
+        continue-on-error: true
       - name: IQAir stations (optional, needs IQAIR_API_KEY secret)
         run: python -m fect_weather iqair
         continue-on-error: true
@@ -36,5 +43,5 @@ jobs:
           git config user.email "fect-bot@users.noreply.github.com"
           git add data docs
           git diff --cached --quiet || git commit -m "data: AQI update $(TZ=Asia/Colombo date +'%Y-%m-%d %H:%M') SLST"
-          git pull --rebase
+          git pull --rebase -X theirs
           git push

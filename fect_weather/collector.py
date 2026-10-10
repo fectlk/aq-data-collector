@@ -40,7 +40,7 @@ def load_cities(path: str | Path) -> list[dict]:
 
 def make_session() -> requests.Session:
     s = requests.Session()
-    retry = Retry(total=4, backoff_factor=2,
+    retry = Retry(total=5, backoff_factor=3,
                   status_forcelist=[429, 500, 502, 503, 504],
                   allowed_methods=["GET"], respect_retry_after_header=True)
     s.mount("https://", HTTPAdapter(max_retries=retry))
@@ -59,7 +59,7 @@ def fetch_current(session, url: str, cities: list[dict], variables: list[str]) -
             "current": ",".join(variables),
             "timezone": "Asia/Colombo",
         }
-        resp = session.get(url, params=params, timeout=30)
+        resp = session.get(url, params=params, timeout=60)
         resp.raise_for_status()
         data = resp.json()
         if isinstance(data, dict):  # single location -> dict, not list
@@ -83,7 +83,11 @@ def collect(cities_path: str | Path = "config/cities.csv",
     session = session or make_session()
     cities = load_cities(cities_path)
     air = fetch_current(session, AIR_URL, cities, AIR_VARS)
-    weather = fetch_current(session, WEATHER_URL, cities, WEATHER_VARS)
+    try:
+        weather = fetch_current(session, WEATHER_URL, cities, WEATHER_VARS)
+    except requests.RequestException as exc:  # weather is secondary: keep the air data
+        print(f"Weather request failed ({type(exc).__name__}); saving air quality only")
+        weather = [{} for _ in cities]
 
     now = datetime.now(TZ)
     path = Path(data_dir) / f"{now:%Y-%m}.csv"
