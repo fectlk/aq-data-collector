@@ -3,6 +3,42 @@
 <head>
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+<style>
+.folium-map{left:230px!important;width:calc(100% - 230px)!important}
+#nav{position:fixed;top:0;bottom:0;left:0;width:230px;background:#fff;z-index:1000;
+ border-right:1px solid #d0d0d0;overflow-y:auto;font:13px Arial,sans-serif;color:#222}
+#nav h1{font-size:15px;margin:0;padding:12px 12px 8px}
+#nav h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#777;
+ margin:14px 12px 4px}
+#nav button{display:flex;justify-content:space-between;align-items:center;width:100%;
+ border:0;background:none;padding:6px 12px;font:inherit;cursor:pointer;text-align:left}
+#nav button:hover{background:#f0f3f7}
+#nav button.active{background:#e3eefc;font-weight:bold}
+#nav .live{font-size:14px;padding:10px 12px;color:#0a7a2f}
+#nav .chip{min-width:26px;text-align:center;border-radius:10px;padding:1px 6px;
+ font-size:11px;font-weight:bold;border:1px solid #888}
+#stamp{position:fixed;bottom:8px;left:238px;z-index:9999;background:#fff;padding:6px 10px;
+ font:12px Arial;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+#navtoggle{display:none;position:fixed;top:10px;left:10px;z-index:1100;border:0;
+ background:#fff;border-radius:6px;padding:6px 10px;font-size:18px;
+ box-shadow:0 1px 4px rgba(0,0,0,.4)}
+@media(max-width:700px){
+ .folium-map{left:0!important;width:100%!important}
+ #nav{transform:translateX(-100%);transition:transform .2s}
+ #nav.open{transform:none}
+ #navtoggle{display:block}
+ #stamp{left:8px}
+}
+</style>
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -17,7 +53,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_5ea558d8c7f4b84b49aa7dda75230e47 {
+                #map_19946eafd0e7c089421fe0b9a8d6199e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -26,43 +62,106 @@
                 }
                 .leaflet-container { font-size: 1rem; }
             </style>
-
-            <style>html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            </style>
-
-            <style>#map {
-                position:absolute;
-                top:0;
-                bottom:0;
-                right:0;
-                left:0;
-                }
-            </style>
-
-            <script>
-                L_NO_TOUCH = false;
-                L_DISABLE_3D = false;
-            </script>
-
         
 </head>
 <body>
     
-    <div style='position:fixed;bottom:8px;left:8px;z-index:9999;background:#fff;padding:6px 10px;font:12px Arial;border-radius:6px'>FECT Sri Lanka AQI &middot; updated 2026-10-10 15:21 (SLST) &middot; Data: <a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0)</div>
     
-            <div class="folium-map" id="map_5ea558d8c7f4b84b49aa7dda75230e47" ></div>
+<button id="navtoggle" aria-label="Toggle menu">&#9776;</button>
+<div id="nav">
+ <h1>FECT Sri Lanka AQI</h1>
+ <button class="live" id="livebtn">&#9679; Live map</button>
+ <div id="navlist"></div>
+</div>
+<div id="stamp"></div>
+    
+<script>
+(function(){
+const LIVE={"t":"2026-10-10T14:30","d":[["Ampara","Eastern",7.2975,81.682,30,2.8,32.2],["Mullaitivu","Northern",9.2671,80.8142,22,4.5,29.3],["Trincomalee","Eastern",8.5874,81.2152,25,3.7,29.8],["Batticaloa","Eastern",7.7102,81.6924,25,1.8,30.4],["Kurunegala","North Western",7.4863,80.3623,58,3.9,25.0],["Monaragala","Uva",6.8728,81.3507,35,2.4,26.6],["Chilaw","North Western",7.5758,79.7953,42,4.6,28.1],["Anuradhapura","North Central",8.3114,80.4037,28,3.7,25.8],["Polonnaruwa","North Central",7.9403,81.0188,30,3.5,28.2],["Badulla","Uva",6.9934,81.055,35,2.4,24.9],["Kilinochchi","Northern",9.3803,80.377,21,4.6,31.7],["Puttalam","North Western",8.0408,79.8394,36,4.1,29.2],["Mannar","Northern",8.981,79.9044,24,3.3,28.5],["Matale","Central",7.4675,80.6234,47,2.9,25.2],["Jaffna","Northern",9.6615,80.0255,29,6.5,31.8],["Hambantota","Southern",6.1241,81.1185,47,7.1,29.3],["Matara","Southern",5.9549,80.555,47,5.2,26.9],["Galle","Southern",6.0535,80.221,47,5.2,27.6],["Nuwara Eliya","Central",6.9497,80.7891,44,5.7,17.9],["Kandy","Central",7.2906,80.6337,51,2.7,25.0],["Moratuwa","Western",6.773,79.8816,66,16.5,27.6],["Gampaha","Western",7.0917,79.9999,65,10.5,26.7],["Kalutara","Western",6.5854,79.9607,51,9.2,26.5],["Negombo","Western",7.2008,79.8737,65,10.5,28.9],["Colombo","Western",6.9271,79.8612,66,16.5,28.5],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,16.9,25.5],["Vavuniya","Northern",8.7514,80.4971,21,3.6,26.4],["Kegalle","Sabaragamuwa",7.2513,80.3464,66,6.9,25.4]]}, SNAPS=[{"t":"2026-10-03T03:30","avg":67,"d":[["Colombo","Western",6.9271,79.8612,70,6.2,24.2],["Kegalle","Sabaragamuwa",7.2513,80.3464,84,8.2,23.8],["Ratnapura","Sabaragamuwa",6.7056,80.3847,64,6.5,24.1],["Monaragala","Uva",6.8728,81.3507,68,17.8,23.5],["Badulla","Uva",6.9934,81.055,68,17.8,20.7],["Polonnaruwa","North Central",7.9403,81.0188,61,13.6,25.2],["Anuradhapura","North Central",8.3114,80.4037,68,15.8,24.3],["Chilaw","North Western",7.5758,79.7953,61,8.3,24.1],["Kurunegala","North Western",7.4863,80.3623,82,16.5,23.3],["Ampara","Eastern",7.2975,81.682,66,15.3,25.7],["Batticaloa","Eastern",7.7102,81.6924,61,15.4,26.6],["Trincomalee","Eastern",8.5874,81.2152,59,10.7,26.7],["Mullaitivu","Northern",9.2671,80.8142,58,10.2,27.6],["Kilinochchi","Northern",9.3803,80.377,56,8.6,26.9],["Puttalam","North Western",8.0408,79.8394,67,8.5,24.5],["Vavuniya","Northern",8.7514,80.4971,60,10.2,25.0],["Mannar","Northern",8.981,79.9044,64,12.3,27.6],["Kalutara","Western",6.5854,79.9607,63,9.0,23.6],["Gampaha","Western",7.0917,79.9999,78,5.8,23.9],["Moratuwa","Western",6.773,79.8816,70,6.2,24.1],["Kandy","Central",7.2906,80.6337,73,19.3,21.3],["Nuwara Eliya","Central",6.9497,80.7891,61,9.7,13.5],["Negombo","Western",7.2008,79.8737,78,5.8,24.0],["Galle","Southern",6.0535,80.221,65,16.9,23.5],["Matara","Southern",5.9549,80.555,65,16.9,23.9],["Hambantota","Southern",6.1241,81.1185,64,10.1,25.1],["Jaffna","Northern",9.6615,80.0255,60,11.4,28.0],["Matale","Central",7.4675,80.6234,71,19.2,22.6]]},{"t":"2026-10-03T10:30","avg":61,"d":[["Mullaitivu","Northern",9.2671,80.8142,56,10.0,30.8],["Trincomalee","Eastern",8.5874,81.2152,57,12.0,30.3],["Batticaloa","Eastern",7.7102,81.6924,61,12.7,32.3],["Ampara","Eastern",7.2975,81.682,63,11.8,33.0],["Kurunegala","North Western",7.4863,80.3623,71,12.7,30.5],["Chilaw","North Western",7.5758,79.7953,57,12.6,30.1],["Badulla","Uva",6.9934,81.055,64,8.8,29.8],["Polonnaruwa","North Central",7.9403,81.0188,59,13.9,32.0],["Monaragala","Uva",6.8728,81.3507,64,8.8,31.8],["Ratnapura","Sabaragamuwa",6.7056,80.3847,55,10.3,31.1],["Kegalle","Sabaragamuwa",7.2513,80.3464,69,13.5,30.4],["Anuradhapura","North Central",8.3114,80.4037,62,14.3,30.9],["Kilinochchi","Northern",9.3803,80.377,53,9.9,33.0],["Puttalam","North Western",8.0408,79.8394,60,9.6,31.6],["Vavuniya","Northern",8.7514,80.4971,56,11.6,32.1],["Negombo","Western",7.2008,79.8737,69,18.2,29.8],["Kalutara","Western",6.5854,79.9607,57,12.9,29.5],["Gampaha","Western",7.0917,79.9999,69,18.2,30.8],["Moratuwa","Western",6.773,79.8816,62,18.9,29.6],["Kandy","Central",7.2906,80.6337,67,11.7,29.0],["Nuwara Eliya","Central",6.9497,80.7891,54,8.5,21.6],["Colombo","Western",6.9271,79.8612,62,18.9,29.3],["Matale","Central",7.4675,80.6234,65,13.2,30.1],["Jaffna","Northern",9.6615,80.0255,59,11.9,31.1],["Hambantota","Southern",6.1241,81.1185,60,13.4,29.9],["Mannar","Northern",8.981,79.9044,61,13.8,30.8],["Galle","Southern",6.0535,80.221,63,14.0,29.7],["Matara","Southern",5.9549,80.555,63,14.0,29.9]]},{"t":"2026-10-03T16:30","avg":66,"d":[["Kilinochchi","Northern",9.3803,80.377,53,11.1,28.8],["Ratnapura","Sabaragamuwa",6.7056,80.3847,52,10.4,28.0],["Monaragala","Uva",6.8728,81.3507,62,8.5,28.3],["Badulla","Uva",6.9934,81.055,62,8.5,23.7],["Kegalle","Sabaragamuwa",7.2513,80.3464,96,24.5,26.2],["Anuradhapura","North Central",8.3114,80.4037,59,11.9,30.0],["Chilaw","North Western",7.5758,79.7953,73,12.7,28.4],["Puttalam","North Western",8.0408,79.8394,76,13.2,29.3],["Kurunegala","North Western",7.4863,80.3623,83,17.8,26.0],["Ampara","Eastern",7.2975,81.682,61,10.6,29.8],["Batticaloa","Eastern",7.7102,81.6924,59,9.6,29.9],["Trincomalee","Eastern",8.5874,81.2152,55,9.2,29.3],["Mullaitivu","Northern",9.2671,80.8142,55,10.4,29.5],["Polonnaruwa","North Central",7.9403,81.0188,58,9.5,30.5],["Mannar","Northern",8.981,79.9044,58,13.6,29.7],["Jaffna","Northern",9.6615,80.0255,57,12.7,31.7],["Vavuniya","Northern",8.7514,80.4971,55,11.3,28.8],["Colombo","Western",6.9271,79.8612,65,18.7,28.5],["Negombo","Western",7.2008,79.8737,113,20.8,28.4],["Gampaha","Western",7.0917,79.9999,113,20.8,28.4],["Moratuwa","Western",6.773,79.8816,65,18.7,28.6],["Kalutara","Western",6.5854,79.9607,56,15.0,28.4],["Nuwara Eliya","Central",6.9497,80.7891,53,9.4,17.0],["Matale","Central",7.4675,80.6234,64,13.6,24.4],["Galle","Southern",6.0535,80.221,63,14.6,28.5],["Matara","Southern",5.9549,80.555,63,14.6,28.6],["Hambantota","Southern",6.1241,81.1185,56,12.7,29.0],["Kandy","Central",7.2906,80.6337,67,15.8,24.3]]},{"t":"2026-10-03T21:30","avg":60,"d":[["Puttalam","North Western",8.0408,79.8394,56,18.2,27.0],["Trincomalee","Eastern",8.5874,81.2152,53,8.4,26.8],["Batticaloa","Eastern",7.7102,81.6924,57,6.4,27.7],["Ampara","Eastern",7.2975,81.682,58,7.4,27.6],["Kurunegala","North Western",7.4863,80.3623,70,30.6,25.3],["Chilaw","North Western",7.5758,79.7953,56,12.4,26.8],["Kegalle","Sabaragamuwa",7.2513,80.3464,68,33.2,25.0],["Polonnaruwa","North Central",7.9403,81.0188,57,9.9,25.1],["Badulla","Uva",6.9934,81.055,60,14.1,21.8],["Monaragala","Uva",6.8728,81.3507,60,14.1,25.3],["Ratnapura","Sabaragamuwa",6.7056,80.3847,55,29.2,25.8],["Mullaitivu","Northern",9.2671,80.8142,53,9.2,29.0],["Anuradhapura","North Central",8.3114,80.4037,59,12.4,25.3],["Kilinochchi","Northern",9.3803,80.377,52,6.9,28.4],["Nuwara Eliya","Central",6.9497,80.7891,52,15.1,13.9],["Vavuniya","Northern",8.7514,80.4971,54,8.1,24.4],["Negombo","Western",7.2008,79.8737,68,33.1,26.7],["Kalutara","Western",6.5854,79.9607,60,37.1,26.3],["Gampaha","Western",7.0917,79.9999,68,33.1,26.1],["Moratuwa","Western",6.773,79.8816,64,36.3,26.9],["Kandy","Central",7.2906,80.6337,66,18.7,22.8],["Colombo","Western",6.9271,79.8612,64,36.3,27.0],["Matale","Central",7.4675,80.6234,64,20.8,24.2],["Galle","Southern",6.0535,80.221,65,25.1,26.7],["Matara","Southern",5.9549,80.555,65,25.1,26.0],["Hambantota","Southern",6.1241,81.1185,55,10.7,27.5],["Jaffna","Northern",9.6615,80.0255,56,9.3,29.3],["Mannar","Northern",8.981,79.9044,57,10.1,29.0]]},{"t":"2026-10-04T02:30","avg":61,"d":[["Trincomalee","Eastern",8.5874,81.2152,51,7.1,24.5],["Batticaloa","Eastern",7.7102,81.6924,54,7.7,26.0],["Ampara","Eastern",7.2975,81.682,54,6.6,25.7],["Kurunegala","North Western",7.4863,80.3623,71,15.8,23.7],["Puttalam","North Western",8.0408,79.8394,58,22.7,24.6],["Polonnaruwa","North Central",7.9403,81.0188,55,9.7,25.0],["Anuradhapura","North Central",8.3114,80.4037,59,14.8,24.7],["Badulla","Uva",6.9934,81.055,56,13.0,20.7],["Monaragala","Uva",6.8728,81.3507,56,13.0,23.6],["Ratnapura","Sabaragamuwa",6.7056,80.3847,62,17.3,24.9],["Mullaitivu","Northern",9.2671,80.8142,52,6.9,25.3],["Chilaw","North Western",7.5758,79.7953,57,17.8,24.3],["Kilinochchi","Northern",9.3803,80.377,50,6.4,25.1],["Kegalle","Sabaragamuwa",7.2513,80.3464,71,13.3,24.0],["Vavuniya","Northern",8.7514,80.4971,53,9.7,24.3],["Colombo","Western",6.9271,79.8612,73,25.7,24.3],["Negombo","Western",7.2008,79.8737,72,21.5,24.6],["Kalutara","Western",6.5854,79.9607,71,33.3,24.5],["Gampaha","Western",7.0917,79.9999,72,21.5,23.8],["Moratuwa","Western",6.773,79.8816,73,25.7,24.8],["Kandy","Central",7.2906,80.6337,62,12.7,21.7],["Mannar","Northern",8.981,79.9044,56,10.2,25.7],["Matale","Central",7.4675,80.6234,64,14.8,22.5],["Galle","Southern",6.0535,80.221,70,28.8,24.9],["Matara","Southern",5.9549,80.555,70,28.8,24.8],["Hambantota","Southern",6.1241,81.1185,56,13.3,26.4],["Jaffna","Northern",9.6615,80.0255,54,5.5,26.7],["Nuwara Eliya","Central",6.9497,80.7891,53,10.4,13.0]]},{"t":"2026-10-04T04:30","avg":62,"d":[["Mullaitivu","Northern",9.2671,80.8142,51,6.4,25.4],["Trincomalee","Eastern",8.5874,81.2152,51,8.1,24.6],["Batticaloa","Eastern",7.7102,81.6924,52,4.4,25.7],["Ampara","Eastern",7.2975,81.682,51,2.8,25.2],["Kurunegala","North Western",7.4863,80.3623,84,34.1,23.6],["Puttalam","North Western",8.0408,79.8394,61,20.7,24.3],["Polonnaruwa","North Central",7.9403,81.0188,55,10.0,25.0],["Anuradhapura","North Central",8.3114,80.4037,59,10.1,24.5],["Badulla","Uva",6.9934,81.055,53,9.0,19.9],["Monaragala","Uva",6.8728,81.3507,53,9.0,23.4],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,11.2,24.7],["Kilinochchi","Northern",9.3803,80.377,48,4.2,25.0],["Chilaw","North Western",7.5758,79.7953,61,21.5,24.3],["Kegalle","Sabaragamuwa",7.2513,80.3464,78,22.2,23.6],["Mannar","Northern",8.981,79.9044,56,6.4,25.3],["Jaffna","Northern",9.6615,80.0255,54,4.6,26.8],["Vavuniya","Northern",8.7514,80.4971,52,6.3,24.1],["Colombo","Western",6.9271,79.8612,74,19.3,23.7],["Negombo","Western",7.2008,79.8737,80,29.7,24.3],["Kalutara","Western",6.5854,79.9607,69,19.8,23.9],["Moratuwa","Western",6.773,79.8816,74,19.3,24.1],["Gampaha","Western",7.0917,79.9999,80,29.7,23.5],["Nuwara Eliya","Central",6.9497,80.7891,53,12.1,13.3],["Matale","Central",7.4675,80.6234,65,18.3,22.3],["Galle","Southern",6.0535,80.221,69,26.4,24.5],["Matara","Southern",5.9549,80.555,69,26.4,24.5],["Hambantota","Southern",6.1241,81.1185,57,13.4,25.7],["Kandy","Central",7.2906,80.6337,65,18.3,21.3]]},{"t":"2026-10-04T10:30","avg":62,"d":[["Kurunegala","North Western",7.4863,80.3623,86,15.9,31.0],["Trincomalee","Eastern",8.5874,81.2152,47,6.1,30.9],["Batticaloa","Eastern",7.7102,81.6924,44,6.7,31.7],["Ampara","Eastern",7.2975,81.682,38,7.8,33.2],["Chilaw","North Western",7.5758,79.7953,67,28.8,30.7],["Mullaitivu","Northern",9.2671,80.8142,47,6.5,30.9],["Polonnaruwa","North Central",7.9403,81.0188,53,6.9,32.4],["Badulla","Uva",6.9934,81.055,50,7.7,30.2],["Monaragala","Uva",6.8728,81.3507,50,7.7,32.4],["Ratnapura","Sabaragamuwa",6.7056,80.3847,62,12.7,30.9],["Kegalle","Sabaragamuwa",7.2513,80.3464,80,16.5,30.8],["Anuradhapura","North Central",8.3114,80.4037,56,8.8,32.0],["Kilinochchi","Northern",9.3803,80.377,42,7.0,33.0],["Puttalam","North Western",8.0408,79.8394,67,15.9,32.8],["Vavuniya","Northern",8.7514,80.4971,50,8.3,32.9],["Negombo","Western",7.2008,79.8737,88,26.8,30.5],["Kalutara","Western",6.5854,79.9607,72,18.9,30.3],["Gampaha","Western",7.0917,79.9999,88,26.8,31.5],["Moratuwa","Western",6.773,79.8816,78,24.3,30.2],["Kandy","Central",7.2906,80.6337,65,9.7,29.8],["Nuwara Eliya","Central",6.9497,80.7891,54,7.4,19.9],["Colombo","Western",6.9271,79.8612,78,24.3,30.4],["Matale","Central",7.4675,80.6234,64,9.4,29.8],["Galle","Southern",6.0535,80.221,72,16.8,30.3],["Matara","Southern",5.9549,80.555,72,16.8,30.2],["Hambantota","Southern",6.1241,81.1185,58,14.0,30.3],["Jaffna","Northern",9.6615,80.0255,51,7.3,30.9],["Mannar","Northern",8.981,79.9044,54,10.4,30.8]]},{"t":"2026-10-04T17:30","avg":59,"d":[["Trincomalee","Eastern",8.5874,81.2152,43,6.0,29.2],["Batticaloa","Eastern",7.7102,81.6924,42,9.3,29.6],["Ampara","Eastern",7.2975,81.682,42,9.6,27.7],["Kurunegala","North Western",7.4863,80.3623,80,18.5,25.4],["Puttalam","North Western",8.0408,79.8394,64,12.1,27.8],["Polonnaruwa","North Central",7.9403,81.0188,52,5.4,25.2],["Anuradhapura","North Central",8.3114,80.4037,56,8.7,26.0],["Badulla","Uva",6.9934,81.055,51,7.6,22.1],["Monaragala","Uva",6.8728,81.3507,51,7.6,25.3],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,14.8,25.7],["Mullaitivu","Northern",9.2671,80.8142,41,7.8,29.5],["Chilaw","North Western",7.5758,79.7953,64,14.7,26.5],["Kilinochchi","Northern",9.3803,80.377,36,8.4,28.7],["Kegalle","Sabaragamuwa",7.2513,80.3464,74,16.9,25.2],["Vavuniya","Northern",8.7514,80.4971,46,9.8,27.4],["Colombo","Western",6.9271,79.8612,77,28.6,27.8],["Negombo","Western",7.2008,79.8737,81,27.8,27.1],["Kalutara","Western",6.5854,79.9607,71,22.2,26.8],["Gampaha","Western",7.0917,79.9999,81,27.8,25.9],["Moratuwa","Western",6.773,79.8816,77,28.6,27.8],["Kandy","Central",7.2906,80.6337,61,9.5,23.4],["Mannar","Northern",8.981,79.9044,53,12.3,29.1],["Matale","Central",7.4675,80.6234,60,9.2,23.8],["Galle","Southern",6.0535,80.221,69,13.8,27.8],["Matara","Southern",5.9549,80.555,69,13.8,27.3],["Hambantota","Southern",6.1241,81.1185,61,13.2,29.2],["Jaffna","Northern",9.6615,80.0255,45,8.4,29.8],["Nuwara Eliya","Central",6.9497,80.7891,52,7.6,16.2]]},{"t":"2026-10-04T23:30","avg":57,"d":[["Mullaitivu","Northern",9.2671,80.8142,38,7.0,26.3],["Trincomalee","Eastern",8.5874,81.2152,40,6.2,25.3],["Batticaloa","Eastern",7.7102,81.6924,43,10.7,26.4],["Ampara","Eastern",7.2975,81.682,43,12.9,25.9],["Kurunegala","North Western",7.4863,80.3623,74,24.2,23.3],["Puttalam","North Western",8.0408,79.8394,62,19.3,24.8],["Polonnaruwa","North Central",7.9403,81.0188,50,8.8,24.6],["Anuradhapura","North Central",8.3114,80.4037,53,14.3,24.4],["Badulla","Uva",6.9934,81.055,51,14.0,21.1],["Monaragala","Uva",6.8728,81.3507,51,14.0,24.5],["Ratnapura","Sabaragamuwa",6.7056,80.3847,57,19.4,24.9],["Kilinochchi","Northern",9.3803,80.377,37,8.4,25.3],["Chilaw","North Western",7.5758,79.7953,65,18.2,24.2],["Kegalle","Sabaragamuwa",7.2513,80.3464,68,23.1,23.7],["Mannar","Northern",8.981,79.9044,51,10.5,26.3],["Jaffna","Northern",9.6615,80.0255,40,10.2,27.4],["Vavuniya","Northern",8.7514,80.4971,43,7.8,24.4],["Colombo","Western",6.9271,79.8612,74,28.2,25.2],["Negombo","Western",7.2008,79.8737,77,26.1,24.7],["Kalutara","Western",6.5854,79.9607,68,24.1,24.9],["Moratuwa","Western",6.773,79.8816,74,28.2,25.1],["Gampaha","Western",7.0917,79.9999,77,26.1,24.4],["Nuwara Eliya","Central",6.9497,80.7891,51,13.1,14.3],["Matale","Central",7.4675,80.6234,57,17.4,22.6],["Galle","Southern",6.0535,80.221,69,21.9,25.1],["Matara","Southern",5.9549,80.555,69,21.9,25.2],["Hambantota","Southern",6.1241,81.1185,60,10.6,26.7],["Kandy","Central",7.2906,80.6337,57,18.5,21.8]]},{"t":"2026-10-05T04:30","avg":55,"d":[["Kurunegala","North Western",7.4863,80.3623,59,12.7,22.9],["Trincomalee","Eastern",8.5874,81.2152,40,7.3,24.4],["Batticaloa","Eastern",7.7102,81.6924,48,8.9,25.3],["Ampara","Eastern",7.2975,81.682,52,14.5,24.7],["Puttalam","North Western",8.0408,79.8394,56,10.0,24.1],["Mullaitivu","Northern",9.2671,80.8142,41,9.5,25.6],["Anuradhapura","North Central",8.3114,80.4037,52,9.6,24.1],["Polonnaruwa","North Central",7.9403,81.0188,47,8.6,24.5],["Badulla","Uva",6.9934,81.055,52,10.7,21.0],["Monaragala","Uva",6.8728,81.3507,52,10.7,23.5],["Ratnapura","Sabaragamuwa",6.7056,80.3847,55,11.7,23.9],["Chilaw","North Western",7.5758,79.7953,63,15.2,23.8],["Kilinochchi","Northern",9.3803,80.377,43,9.6,25.2],["Kegalle","Sabaragamuwa",7.2513,80.3464,57,14.0,23.1],["Vavuniya","Northern",8.7514,80.4971,51,11.1,23.9],["Colombo","Western",6.9271,79.8612,71,13.9,24.1],["Negombo","Western",7.2008,79.8737,65,12.3,23.9],["Kalutara","Western",6.5854,79.9607,66,17.1,23.6],["Gampaha","Western",7.0917,79.9999,65,12.3,23.7],["Moratuwa","Western",6.773,79.8816,71,13.9,24.1],["Kandy","Central",7.2906,80.6337,53,11.8,21.0],["Mannar","Northern",8.981,79.9044,52,9.8,27.3],["Matale","Central",7.4675,80.6234,52,11.3,22.0],["Galle","Southern",6.0535,80.221,67,20.0,24.1],["Matara","Southern",5.9549,80.555,67,20.0,24.1],["Hambantota","Southern",6.1241,81.1185,60,12.3,25.7],["Jaffna","Northern",9.6615,80.0255,44,7.9,27.5],["Nuwara Eliya","Central",6.9497,80.7891,46,8.4,13.4]]},{"t":"2026-10-05T10:30","avg":56,"d":[["Trincomalee","Eastern",8.5874,81.2152,37,6.7,31.5],["Ampara","Eastern",7.2975,81.682,55,8.4,33.4],["Kurunegala","North Western",7.4863,80.3623,57,11.3,31.0],["Puttalam","North Western",8.0408,79.8394,54,11.6,31.6],["Chilaw","North Western",7.5758,79.7953,63,18.1,30.5],["Polonnaruwa","North Central",7.9403,81.0188,42,6.7,32.8],["Mullaitivu","Northern",9.2671,80.8142,45,7.4,31.4],["Badulla","Uva",6.9934,81.055,51,7.5,29.3],["Monaragala","Uva",6.8728,81.3507,51,7.5,32.3],["Ratnapura","Sabaragamuwa",6.7056,80.3847,57,13.0,30.5],["Kegalle","Sabaragamuwa",7.2513,80.3464,60,12.3,30.8],["Anuradhapura","North Central",8.3114,80.4037,50,8.5,31.6],["Kilinochchi","Northern",9.3803,80.377,48,7.1,34.2],["Batticaloa","Eastern",7.7102,81.6924,48,7.3,31.7],["Vavuniya","Northern",8.7514,80.4971,52,8.1,33.0],["Colombo","Western",6.9271,79.8612,73,26.0,30.6],["Negombo","Western",7.2008,79.8737,66,21.3,30.1],["Kalutara","Western",6.5854,79.9607,67,16.8,30.4],["Gampaha","Western",7.0917,79.9999,66,21.3,31.3],["Moratuwa","Western",6.773,79.8816,73,26.0,30.2],["Kandy","Central",7.2906,80.6337,52,6.9,29.0],["Mannar","Northern",8.981,79.9044,52,9.0,30.3],["Matale","Central",7.4675,80.6234,51,8.1,29.5],["Galle","Southern",6.0535,80.221,67,16.9,30.7],["Matara","Southern",5.9549,80.555,67,16.9,31.1],["Hambantota","Southern",6.1241,81.1185,60,17.5,31.2],["Jaffna","Northern",9.6615,80.0255,48,9.0,30.7],["Nuwara Eliya","Central",6.9497,80.7891,47,9.5,19.4]]},{"t":"2026-10-05T19:30","avg":56,"d":[["Mullaitivu","Northern",9.2671,80.8142,45,8.0,28.7],["Trincomalee","Eastern",8.5874,81.2152,39,8.4,27.0],["Batticaloa","Eastern",7.7102,81.6924,52,9.6,27.6],["Ampara","Eastern",7.2975,81.682,55,8.5,26.8],["Kurunegala","North Western",7.4863,80.3623,57,17.0,24.1],["Puttalam","North Western",8.0408,79.8394,55,15.3,25.8],["Polonnaruwa","North Central",7.9403,81.0188,43,8.3,25.3],["Anuradhapura","North Central",8.3114,80.4037,46,7.2,24.8],["Badulla","Uva",6.9934,81.055,51,7.5,22.2],["Monaragala","Uva",6.8728,81.3507,51,7.5,25.0],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,15.4,25.1],["Kilinochchi","Northern",9.3803,80.377,43,5.3,27.7],["Chilaw","North Western",7.5758,79.7953,63,15.7,25.8],["Kegalle","Sabaragamuwa",7.2513,80.3464,59,24.6,24.2],["Mannar","Northern",8.981,79.9044,51,7.6,28.8],["Jaffna","Northern",9.6615,80.0255,50,8.6,29.1],["Colombo","Western",6.9271,79.8612,75,24.0,25.6],["Negombo","Western",7.2008,79.8737,67,23.4,25.1],["Kalutara","Western",6.5854,79.9607,70,16.7,25.2],["Gampaha","Western",7.0917,79.9999,67,23.4,24.9],["Moratuwa","Western",6.773,79.8816,75,24.0,25.7],["Vavuniya","Northern",8.7514,80.4971,47,4.6,25.5],["Nuwara Eliya","Central",6.9497,80.7891,49,7.9,14.8],["Matale","Central",7.4675,80.6234,51,11.0,23.4],["Galle","Southern",6.0535,80.221,68,15.6,26.1],["Matara","Southern",5.9549,80.555,68,15.6,25.8],["Hambantota","Southern",6.1241,81.1185,60,11.8,27.1],["Kandy","Central",7.2906,80.6337,53,13.9,22.6]]},{"t":"2026-10-06T03:30","avg":57,"d":[["Trincomalee","Eastern",8.5874,81.2152,39,8.5,24.8],["Batticaloa","Eastern",7.7102,81.6924,51,8.6,25.4],["Ampara","Eastern",7.2975,81.682,54,10.9,25.0],["Kurunegala","North Western",7.4863,80.3623,56,13.3,22.7],["Puttalam","North Western",8.0408,79.8394,53,9.1,24.4],["Polonnaruwa","North Central",7.9403,81.0188,43,10.8,24.2],["Anuradhapura","North Central",8.3114,80.4037,45,12.1,24.2],["Badulla","Uva",6.9934,81.055,51,12.6,20.9],["Monaragala","Uva",6.8728,81.3507,51,12.6,22.7],["Ratnapura","Sabaragamuwa",6.7056,80.3847,63,16.1,24.8],["Mullaitivu","Northern",9.2671,80.8142,42,6.1,26.1],["Chilaw","North Western",7.5758,79.7953,63,15.5,24.2],["Kegalle","Sabaragamuwa",7.2513,80.3464,66,21.4,23.1],["Kilinochchi","Northern",9.3803,80.377,39,6.9,26.0],["Vavuniya","Northern",8.7514,80.4971,39,9.1,24.3],["Mannar","Northern",8.981,79.9044,48,7.1,27.0],["Colombo","Western",6.9271,79.8612,80,22.1,24.7],["Negombo","Western",7.2008,79.8737,73,21.4,24.3],["Kalutara","Western",6.5854,79.9607,73,24.0,23.8],["Moratuwa","Western",6.773,79.8816,80,22.1,24.4],["Kandy","Central",7.2906,80.6337,58,18.6,21.6],["Gampaha","Western",7.0917,79.9999,73,21.4,23.6],["Matale","Central",7.4675,80.6234,52,11.6,23.4],["Galle","Southern",6.0535,80.221,70,25.6,24.7],["Matara","Southern",5.9549,80.555,70,25.6,24.4],["Hambantota","Southern",6.1241,81.1185,59,8.0,25.7],["Jaffna","Northern",9.6615,80.0255,50,7.6,27.8],["Nuwara Eliya","Central",6.9497,80.7891,51,11.8,13.0]]},{"t":"2026-10-06T11:30","avg":57,"d":[["Puttalam","North Western",8.0408,79.8394,53,10.4,32.5],["Trincomalee","Eastern",8.5874,81.2152,42,5.6,31.3],["Batticaloa","Eastern",7.7102,81.6924,48,6.7,31.6],["Ampara","Eastern",7.2975,81.682,53,8.9,31.7],["Kurunegala","North Western",7.4863,80.3623,58,7.7,31.5],["Chilaw","North Western",7.5758,79.7953,64,19.3,31.0],["Mullaitivu","Northern",9.2671,80.8142,40,7.4,31.1],["Polonnaruwa","North Central",7.9403,81.0188,47,5.5,33.4],["Badulla","Uva",6.9934,81.055,51,6.8,29.7],["Monaragala","Uva",6.8728,81.3507,51,6.8,32.8],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,10.4,32.1],["Kegalle","Sabaragamuwa",7.2513,80.3464,71,10.6,31.9],["Anuradhapura","North Central",8.3114,80.4037,50,5.6,32.5],["Kilinochchi","Northern",9.3803,80.377,37,5.0,34.8],["Mannar","Northern",8.981,79.9044,47,8.1,31.5],["Vavuniya","Northern",8.7514,80.4971,40,5.2,33.3],["Colombo","Western",6.9271,79.8612,80,25.9,31.2],["Negombo","Western",7.2008,79.8737,76,22.8,30.6],["Kalutara","Western",6.5854,79.9607,72,17.9,30.1],["Moratuwa","Western",6.773,79.8816,80,25.9,30.5],["Kandy","Central",7.2906,80.6337,61,5.1,30.9],["Gampaha","Western",7.0917,79.9999,76,22.8,31.1],["Matale","Central",7.4675,80.6234,52,5.4,31.4],["Galle","Southern",6.0535,80.221,67,13.7,30.2],["Matara","Southern",5.9549,80.555,67,13.7,30.4],["Hambantota","Southern",6.1241,81.1185,56,13.2,30.6],["Jaffna","Northern",9.6615,80.0255,49,7.7,31.5],["Nuwara Eliya","Central",6.9497,80.7891,50,5.6,21.3]]},{"t":"2026-10-06T20:30","avg":56,"d":[["Puttalam","North Western",8.0408,79.8394,53,10.6,26.0],["Trincomalee","Eastern",8.5874,81.2152,33,4.7,28.9],["Batticaloa","Eastern",7.7102,81.6924,43,7.3,28.3],["Ampara","Eastern",7.2975,81.682,52,6.7,28.0],["Kurunegala","North Western",7.4863,80.3623,57,29.2,25.1],["Chilaw","North Western",7.5758,79.7953,64,14.1,25.5],["Kegalle","Sabaragamuwa",7.2513,80.3464,67,30.2,24.4],["Polonnaruwa","North Central",7.9403,81.0188,40,5.3,27.6],["Badulla","Uva",6.9934,81.055,49,12.0,22.0],["Monaragala","Uva",6.8728,81.3507,49,12.0,24.9],["Ratnapura","Sabaragamuwa",6.7056,80.3847,59,11.3,24.8],["Mullaitivu","Northern",9.2671,80.8142,36,6.1,29.3],["Anuradhapura","North Central",8.3114,80.4037,43,7.1,27.0],["Kilinochchi","Northern",9.3803,80.377,31,4.9,28.8],["Mannar","Northern",8.981,79.9044,41,6.2,29.6],["Vavuniya","Northern",8.7514,80.4971,33,5.0,27.3],["Negombo","Western",7.2008,79.8737,78,27.0,25.5],["Kalutara","Western",6.5854,79.9607,72,9.3,25.1],["Gampaha","Western",7.0917,79.9999,78,27.0,25.3],["Moratuwa","Western",6.773,79.8816,81,20.0,25.4],["Kandy","Central",7.2906,80.6337,58,18.4,22.8],["Colombo","Western",6.9271,79.8612,81,20.0,25.9],["Matale","Central",7.4675,80.6234,51,11.1,24.0],["Galle","Southern",6.0535,80.221,68,12.6,24.6],["Matara","Southern",5.9549,80.555,68,12.6,24.5],["Hambantota","Southern",6.1241,81.1185,99,11.0,26.0],["Jaffna","Northern",9.6615,80.0255,43,5.7,29.2],["Nuwara Eliya","Central",6.9497,80.7891,43,6.4,14.7]]},{"t":"2026-10-07T03:30","avg":55,"d":[["Batticaloa","Eastern",7.7102,81.6924,43,7.0,27.0],["Ampara","Eastern",7.2975,81.682,51,7.4,26.0],["Kurunegala","North Western",7.4863,80.3623,71,45.3,23.5],["Puttalam","North Western",8.0408,79.8394,55,17.1,25.3],["Chilaw","North Western",7.5758,79.7953,63,16.2,24.6],["Badulla","Uva",6.9934,81.055,54,15.7,19.7],["Polonnaruwa","North Central",7.9403,81.0188,41,6.7,25.8],["Monaragala","Uva",6.8728,81.3507,54,15.7,24.4],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,14.3,23.9],["Kegalle","Sabaragamuwa",7.2513,80.3464,80,35.0,23.8],["Trincomalee","Eastern",8.5874,81.2152,35,5.7,26.8],["Anuradhapura","North Central",8.3114,80.4037,40,5.7,25.5],["Mullaitivu","Northern",9.2671,80.8142,36,6.9,28.3],["Kilinochchi","Northern",9.3803,80.377,30,5.6,27.2],["Colombo","Western",6.9271,79.8612,74,12.5,25.4],["Negombo","Western",7.2008,79.8737,78,24.4,24.6],["Kalutara","Western",6.5854,79.9607,63,11.6,24.4],["Gampaha","Western",7.0917,79.9999,78,24.4,24.2],["Moratuwa","Western",6.773,79.8816,74,12.5,25.0],["Kandy","Central",7.2906,80.6337,57,14.3,21.2],["Nuwara Eliya","Central",6.9497,80.7891,48,11.8,13.8],["Mannar","Northern",8.981,79.9044,42,5.6,27.3],["Galle","Southern",6.0535,80.221,61,10.1,24.2],["Matara","Southern",5.9549,80.555,61,10.1,24.3],["Hambantota","Southern",6.1241,81.1185,54,9.3,25.6],["Jaffna","Northern",9.6615,80.0255,41,6.2,28.1],["Vavuniya","Northern",8.7514,80.4971,33,6.0,25.7],["Matale","Central",7.4675,80.6234,53,14.3,22.7]]},{"t":"2026-10-07T11:30","avg":54,"d":[["Trincomalee","Eastern",8.5874,81.2152,32,4.0,31.2],["Batticaloa","Eastern",7.7102,81.6924,40,5.4,31.7],["Ampara","Eastern",7.2975,81.682,48,8.3,33.0],["Kurunegala","North Western",7.4863,80.3623,84,10.6,31.0],["Puttalam","North Western",8.0408,79.8394,59,10.3,32.8],["Chilaw","North Western",7.5758,79.7953,63,22.3,30.8],["Badulla","Uva",6.9934,81.055,56,6.4,30.4],["Polonnaruwa","North Central",7.9403,81.0188,35,4.6,33.7],["Monaragala","Uva",6.8728,81.3507,56,6.4,31.9],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,8.8,31.2],["Kegalle","Sabaragamuwa",7.2513,80.3464,86,16.2,30.8],["Mullaitivu","Northern",9.2671,80.8142,37,4.8,29.6],["Anuradhapura","North Central",8.3114,80.4037,32,4.8,31.4],["Mannar","Northern",8.981,79.9044,37,5.8,29.8],["Matara","Southern",5.9549,80.555,56,7.7,29.7],["Vavuniya","Northern",8.7514,80.4971,30,4.1,32.2],["Colombo","Western",6.9271,79.8612,72,22.9,31.1],["Negombo","Western",7.2008,79.8737,79,27.2,30.2],["Kalutara","Western",6.5854,79.9607,61,11.9,30.5],["Kilinochchi","Northern",9.3803,80.377,29,4.4,29.3],["Moratuwa","Western",6.773,79.8816,72,22.9,30.1],["Kandy","Central",7.2906,80.6337,56,5.0,31.0],["Gampaha","Western",7.0917,79.9999,79,27.2,31.1],["Matale","Central",7.4675,80.6234,53,5.5,30.2],["Galle","Southern",6.0535,80.221,56,7.7,30.1],["Hambantota","Southern",6.1241,81.1185,54,9.4,29.8],["Jaffna","Northern",9.6615,80.0255,40,7.1,30.8],["Nuwara Eliya","Central",6.9497,80.7891,51,5.0,19.2]]},{"t":"2026-10-07T18:30","avg":64,"d":[["Puttalam","North Western",8.0408,79.8394,61,12.0,26.7],["Trincomalee","Eastern",8.5874,81.2152,33,4.9,29.3],["Batticaloa","Eastern",7.7102,81.6924,41,7.0,29.6],["Ampara","Eastern",7.2975,81.682,50,7.1,28.7],["Kurunegala","North Western",7.4863,80.3623,87,21.5,25.0],["Chilaw","North Western",7.5758,79.7953,135,14.4,25.3],["Mullaitivu","Northern",9.2671,80.8142,34,4.2,28.7],["Polonnaruwa","North Central",7.9403,81.0188,38,5.0,28.0],["Badulla","Uva",6.9934,81.055,56,10.4,23.1],["Monaragala","Uva",6.8728,81.3507,56,10.4,26.5],["Ratnapura","Sabaragamuwa",6.7056,80.3847,57,12.0,24.9],["Kegalle","Sabaragamuwa",7.2513,80.3464,91,20.0,24.5],["Anuradhapura","North Central",8.3114,80.4037,33,4.7,25.5],["Kilinochchi","Northern",9.3803,80.377,29,3.3,29.0],["Colombo","Western",6.9271,79.8612,96,18.5,25.7],["Vavuniya","Northern",8.7514,80.4971,30,2.8,26.4],["Negombo","Western",7.2008,79.8737,158,22.2,25.2],["Kalutara","Western",6.5854,79.9607,54,9.3,25.7],["Gampaha","Western",7.0917,79.9999,158,22.2,25.5],["Moratuwa","Western",6.773,79.8816,96,18.5,25.8],["Kandy","Central",7.2906,80.6337,56,10.4,23.4],["Mannar","Northern",8.981,79.9044,36,2.9,27.9],["Matale","Central",7.4675,80.6234,54,8.5,24.1],["Galle","Southern",6.0535,80.221,52,10.3,26.1],["Matara","Southern",5.9549,80.555,52,10.3,26.7],["Hambantota","Southern",6.1241,81.1185,48,5.0,28.6],["Jaffna","Northern",9.6615,80.0255,37,5.0,28.9],["Nuwara Eliya","Central",6.9497,80.7891,51,7.2,14.9]]},{"t":"2026-10-08T01:30","avg":52,"d":[["Batticaloa","Eastern",7.7102,81.6924,39,6.4,27.2],["Ampara","Eastern",7.2975,81.682,51,12.1,26.7],["Kurunegala","North Western",7.4863,80.3623,84,39.1,24.0],["Puttalam","North Western",8.0408,79.8394,62,22.2,25.7],["Chilaw","North Western",7.5758,79.7953,63,10.5,25.3],["Badulla","Uva",6.9934,81.055,56,16.6,20.0],["Polonnaruwa","North Central",7.9403,81.0188,37,8.2,26.5],["Monaragala","Uva",6.8728,81.3507,56,16.6,24.2],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,18.6,24.6],["Kegalle","Sabaragamuwa",7.2513,80.3464,81,26.1,23.6],["Trincomalee","Eastern",8.5874,81.2152,29,4.9,27.9],["Anuradhapura","North Central",8.3114,80.4037,33,8.3,25.6],["Mullaitivu","Northern",9.2671,80.8142,29,3.6,28.5],["Kilinochchi","Northern",9.3803,80.377,24,2.9,28.0],["Colombo","Western",6.9271,79.8612,66,20.5,24.8],["Mannar","Northern",8.981,79.9044,29,3.8,27.8],["Negombo","Western",7.2008,79.8737,79,22.9,24.4],["Kalutara","Western",6.5854,79.9607,59,22.2,24.2],["Gampaha","Western",7.0917,79.9999,79,22.9,24.0],["Kandy","Central",7.2906,80.6337,56,25.0,21.3],["Nuwara Eliya","Central",6.9497,80.7891,51,15.9,14.0],["Moratuwa","Western",6.773,79.8816,66,20.5,24.7],["Galle","Southern",6.0535,80.221,54,14.7,25.4],["Matara","Southern",5.9549,80.555,54,14.7,25.5],["Hambantota","Southern",6.1241,81.1185,38,3.7,26.3],["Jaffna","Northern",9.6615,80.0255,33,3.8,28.1],["Vavuniya","Northern",8.7514,80.4971,26,4.1,26.1],["Matale","Central",7.4675,80.6234,54,19.3,22.3]]},{"t":"2026-10-08T06:30","avg":49,"d":[["Puttalam","North Western",8.0408,79.8394,59,9.4,25.5],["Trincomalee","Eastern",8.5874,81.2152,26,3.8,28.1],["Batticaloa","Eastern",7.7102,81.6924,33,3.9,28.1],["Ampara","Eastern",7.2975,81.682,45,2.8,26.7],["Kurunegala","North Western",7.4863,80.3623,87,34.8,23.3],["Chilaw","North Western",7.5758,79.7953,60,15.1,24.9],["Mullaitivu","Northern",9.2671,80.8142,26,3.2,28.6],["Polonnaruwa","North Central",7.9403,81.0188,31,5.5,26.1],["Badulla","Uva",6.9934,81.055,48,6.9,20.1],["Monaragala","Uva",6.8728,81.3507,48,6.9,24.8],["Ratnapura","Sabaragamuwa",6.7056,80.3847,60,18.4,24.1],["Kegalle","Sabaragamuwa",7.2513,80.3464,75,23.2,23.1],["Anuradhapura","North Central",8.3114,80.4037,30,3.8,25.4],["Kilinochchi","Northern",9.3803,80.377,22,2.8,27.8],["Colombo","Western",6.9271,79.8612,73,25.5,24.6],["Vavuniya","Northern",8.7514,80.4971,22,3.0,26.1],["Mannar","Northern",8.981,79.9044,27,3.7,27.5],["Negombo","Western",7.2008,79.8737,82,24.3,24.3],["Kalutara","Western",6.5854,79.9607,64,23.8,24.2],["Moratuwa","Western",6.773,79.8816,73,25.5,24.5],["Kandy","Central",7.2906,80.6337,50,9.5,21.3],["Gampaha","Western",7.0917,79.9999,82,24.3,23.9],["Matale","Central",7.4675,80.6234,51,9.7,22.7],["Galle","Southern",6.0535,80.221,51,4.4,24.5],["Matara","Southern",5.9549,80.555,51,4.4,25.6],["Hambantota","Southern",6.1241,81.1185,31,3.2,26.4],["Jaffna","Northern",9.6615,80.0255,32,4.1,28.0],["Nuwara Eliya","Central",6.9497,80.7891,42,7.8,14.5]]},{"t":"2026-10-08T15:30","avg":53,"d":[["Puttalam","North Western",8.0408,79.8394,52,5.2,26.3],["Trincomalee","Eastern",8.5874,81.2152,22,2.6,28.7],["Batticaloa","Eastern",7.7102,81.6924,31,2.2,27.9],["Ampara","Eastern",7.2975,81.682,33,3.0,28.0],["Kurunegala","North Western",7.4863,80.3623,80,11.4,24.8],["Chilaw","North Western",7.5758,79.7953,73,10.4,24.9],["Kegalle","Sabaragamuwa",7.2513,80.3464,73,25.1,24.6],["Polonnaruwa","North Central",7.9403,81.0188,25,2.2,27.6],["Badulla","Uva",6.9934,81.055,35,1.4,22.8],["Monaragala","Uva",6.8728,81.3507,35,1.4,24.4],["Ratnapura","Sabaragamuwa",6.7056,80.3847,59,10.6,25.0],["Mullaitivu","Northern",9.2671,80.8142,22,2.6,29.1],["Anuradhapura","North Central",8.3114,80.4037,25,2.7,25.1],["Kilinochchi","Northern",9.3803,80.377,20,2.3,28.4],["Matale","Central",7.4675,80.6234,44,3.3,24.1],["Vavuniya","Northern",8.7514,80.4971,19,2.0,27.1],["Negombo","Western",7.2008,79.8737,171,25.7,25.4],["Kalutara","Western",6.5854,79.9607,65,7.7,25.5],["Gampaha","Western",7.0917,79.9999,171,25.7,25.5],["Moratuwa","Western",6.773,79.8816,84,14.6,25.5],["Kandy","Central",7.2906,80.6337,45,6.1,23.8],["Colombo","Western",6.9271,79.8612,84,14.6,25.7],["Mannar","Northern",8.981,79.9044,22,2.6,28.0],["Galle","Southern",6.0535,80.221,50,4.1,25.4],["Matara","Southern",5.9549,80.555,50,4.1,26.6],["Hambantota","Southern",6.1241,81.1185,30,5.8,27.7],["Jaffna","Northern",9.6615,80.0255,28,4.1,30.7],["Nuwara Eliya","Central",6.9497,80.7891,37,4.5,16.6]]},{"t":"2026-10-08T23:30","avg":41,"d":[["Trincomalee","Eastern",8.5874,81.2152,19,4.6,25.0],["Batticaloa","Eastern",7.7102,81.6924,28,4.5,24.7],["Ampara","Eastern",7.2975,81.682,26,6.7,24.4],["Kurunegala","North Western",7.4863,80.3623,78,29.3,23.8],["Puttalam","North Western",8.0408,79.8394,51,13.2,25.1],["Polonnaruwa","North Central",7.9403,81.0188,22,5.2,24.9],["Anuradhapura","North Central",8.3114,80.4037,25,10.2,24.5],["Badulla","Uva",6.9934,81.055,27,6.2,21.4],["Monaragala","Uva",6.8728,81.3507,27,6.2,22.9],["Ratnapura","Sabaragamuwa",6.7056,80.3847,56,9.4,24.2],["Mullaitivu","Northern",9.2671,80.8142,19,2.2,26.6],["Chilaw","North Western",7.5758,79.7953,51,7.9,24.9],["Kilinochchi","Northern",9.3803,80.377,16,2.5,25.6],["Kegalle","Sabaragamuwa",7.2513,80.3464,71,18.6,23.7],["Vavuniya","Northern",8.7514,80.4971,16,3.8,25.0],["Colombo","Western",6.9271,79.8612,67,12.2,25.4],["Negombo","Western",7.2008,79.8737,80,16.8,24.9],["Kalutara","Western",6.5854,79.9607,61,8.6,24.2],["Gampaha","Western",7.0917,79.9999,80,16.8,24.9],["Moratuwa","Western",6.773,79.8816,67,12.2,24.8],["Kandy","Central",7.2906,80.6337,43,15.3,22.0],["Mannar","Northern",8.981,79.9044,18,3.0,27.1],["Matale","Central",7.4675,80.6234,43,16.1,23.0],["Galle","Southern",6.0535,80.221,37,7.5,24.0],["Matara","Southern",5.9549,80.555,37,7.5,23.9],["Hambantota","Southern",6.1241,81.1185,28,2.6,25.0],["Jaffna","Northern",9.6615,80.0255,25,4.7,26.5],["Nuwara Eliya","Central",6.9497,80.7891,33,5.7,14.6]]},{"t":"2026-10-09T06:30","avg":40,"d":[["Mullaitivu","Northern",9.2671,80.8142,23,3.9,26.0],["Trincomalee","Eastern",8.5874,81.2152,23,5.7,25.3],["Batticaloa","Eastern",7.7102,81.6924,20,4.3,25.6],["Ampara","Eastern",7.2975,81.682,19,5.0,25.0],["Kurunegala","North Western",7.4863,80.3623,69,36.6,23.9],["Puttalam","North Western",8.0408,79.8394,52,28.2,24.6],["Polonnaruwa","North Central",7.9403,81.0188,24,6.2,24.8],["Anuradhapura","North Central",8.3114,80.4037,32,9.3,24.7],["Badulla","Uva",6.9934,81.055,20,8.5,21.2],["Monaragala","Uva",6.8728,81.3507,20,8.5,23.6],["Ratnapura","Sabaragamuwa",6.7056,80.3847,52,10.2,24.4],["Kilinochchi","Northern",9.3803,80.377,21,4.6,25.8],["Chilaw","North Western",7.5758,79.7953,57,13.2,24.3],["Kegalle","Sabaragamuwa",7.2513,80.3464,67,19.3,23.0],["Mannar","Northern",8.981,79.9044,22,5.6,26.5],["Jaffna","Northern",9.6615,80.0255,30,5.4,26.8],["Vavuniya","Northern",8.7514,80.4971,22,5.8,24.5],["Colombo","Western",6.9271,79.8612,62,8.8,24.5],["Negombo","Western",7.2008,79.8737,82,17.0,24.2],["Kalutara","Western",6.5854,79.9607,51,6.9,23.5],["Moratuwa","Western",6.773,79.8816,62,8.8,24.0],["Gampaha","Western",7.0917,79.9999,82,17.0,24.2],["Nuwara Eliya","Central",6.9497,80.7891,32,11.4,14.8],["Matale","Central",7.4675,80.6234,44,16.6,23.6],["Galle","Southern",6.0535,80.221,30,6.9,24.0],["Matara","Southern",5.9549,80.555,30,6.9,24.2],["Hambantota","Southern",6.1241,81.1185,27,2.5,25.1],["Kandy","Central",7.2906,80.6337,43,15.9,22.2]]},{"t":"2026-10-09T15:30","avg":52,"d":[["Kurunegala","North Western",7.4863,80.3623,75,11.9,25.7],["Trincomalee","Eastern",8.5874,81.2152,30,3.8,29.7],["Batticaloa","Eastern",7.7102,81.6924,31,2.8,29.9],["Ampara","Eastern",7.2975,81.682,35,4.7,30.1],["Puttalam","North Western",8.0408,79.8394,85,11.6,26.0],["Mullaitivu","Northern",9.2671,80.8142,25,4.0,29.8],["Anuradhapura","North Central",8.3114,80.4037,35,4.7,26.0],["Polonnaruwa","North Central",7.9403,81.0188,30,3.6,28.3],["Badulla","Uva",6.9934,81.055,29,3.0,23.1],["Monaragala","Uva",6.8728,81.3507,29,3.0,25.2],["Ratnapura","Sabaragamuwa",6.7056,80.3847,54,20.4,25.1],["Kegalle","Sabaragamuwa",7.2513,80.3464,95,23.1,24.8],["Kilinochchi","Northern",9.3803,80.377,25,4.1,31.5],["Chilaw","North Western",7.5758,79.7953,66,8.0,26.9],["Vavuniya","Northern",8.7514,80.4971,24,4.4,29.0],["Colombo","Western",6.9271,79.8612,83,19.6,28.3],["Negombo","Western",7.2008,79.8737,136,17.5,26.8],["Kalutara","Western",6.5854,79.9607,47,9.7,25.5],["Gampaha","Western",7.0917,79.9999,136,17.5,27.3],["Moratuwa","Western",6.773,79.8816,83,19.6,27.1],["Kandy","Central",7.2906,80.6337,49,7.5,25.5],["Mannar","Northern",8.981,79.9044,31,5.0,29.8],["Matale","Central",7.4675,80.6234,49,4.4,24.8],["Galle","Southern",6.0535,80.221,35,7.5,27.9],["Matara","Southern",5.9549,80.555,35,7.5,27.5],["Hambantota","Southern",6.1241,81.1185,33,6.7,28.7],["Jaffna","Northern",9.6615,80.0255,31,5.9,32.4],["Nuwara Eliya","Central",6.9497,80.7891,36,8.8,17.2]]},{"t":"2026-10-09T23:30","avg":43,"d":[["Trincomalee","Eastern",8.5874,81.2152,29,7.5,25.2],["Batticaloa","Eastern",7.7102,81.6924,26,4.3,26.1],["Ampara","Eastern",7.2975,81.682,24,5.0,25.6],["Kurunegala","North Western",7.4863,80.3623,71,10.9,23.9],["Puttalam","North Western",8.0408,79.8394,60,5.4,24.6],["Chilaw","North Western",7.5758,79.7953,58,4.9,24.6],["Badulla","Uva",6.9934,81.055,22,7.4,21.7],["Polonnaruwa","North Central",7.9403,81.0188,28,6.4,25.2],["Monaragala","Uva",6.8728,81.3507,22,7.4,23.4],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,18.3,24.3],["Kegalle","Sabaragamuwa",7.2513,80.3464,69,15.3,23.7],["Mullaitivu","Northern",9.2671,80.8142,24,4.5,26.3],["Anuradhapura","North Central",8.3114,80.4037,34,7.5,24.8],["Kilinochchi","Northern",9.3803,80.377,23,3.9,26.6],["Mannar","Northern",8.981,79.9044,26,4.2,26.6],["Vavuniya","Northern",8.7514,80.4971,25,4.7,24.9],["Colombo","Western",6.9271,79.8612,65,16.8,24.5],["Negombo","Western",7.2008,79.8737,73,11.1,24.5],["Kalutara","Western",6.5854,79.9607,51,13.6,24.9],["Moratuwa","Western",6.773,79.8816,65,16.8,25.3],["Kandy","Central",7.2906,80.6337,51,18.3,22.0],["Gampaha","Western",7.0917,79.9999,73,11.1,24.0],["Matale","Central",7.4675,80.6234,47,9.5,23.1],["Galle","Southern",6.0535,80.221,38,11.5,24.8],["Matara","Southern",5.9549,80.555,38,11.5,24.3],["Hambantota","Southern",6.1241,81.1185,28,4.7,25.1],["Jaffna","Northern",9.6615,80.0255,31,5.0,27.6],["Nuwara Eliya","Central",6.9497,80.7891,42,13.8,14.1]]},{"t":"2026-10-10T05:30","avg":42,"d":[["Puttalam","North Western",8.0408,79.8394,54,9.1,24.1],["Trincomalee","Eastern",8.5874,81.2152,25,5.8,25.8],["Batticaloa","Eastern",7.7102,81.6924,17,3.7,25.7],["Ampara","Eastern",7.2975,81.682,24,5.9,24.7],["Kurunegala","North Western",7.4863,80.3623,65,22.2,22.9],["Kegalle","Sabaragamuwa",7.2513,80.3464,69,19.8,22.9],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,12.5,23.4],["Anuradhapura","North Central",8.3114,80.4037,29,7.7,24.3],["Polonnaruwa","North Central",7.9403,81.0188,28,9.1,24.7],["Badulla","Uva",6.9934,81.055,31,11.1,20.2],["Monaragala","Uva",6.8728,81.3507,31,11.1,23.1],["Mullaitivu","Northern",9.2671,80.8142,21,3.3,26.3],["Chilaw","North Western",7.5758,79.7953,48,3.7,23.9],["Kilinochchi","Northern",9.3803,80.377,21,2.6,25.6],["Nuwara Eliya","Central",6.9497,80.7891,46,10.8,13.5],["Vavuniya","Northern",8.7514,80.4971,22,4.0,24.5],["Mannar","Northern",8.981,79.9044,23,3.6,26.0],["Colombo","Western",6.9271,79.8612,65,12.6,24.1],["Negombo","Western",7.2008,79.8737,70,16.5,23.8],["Kalutara","Western",6.5854,79.9607,51,7.0,23.2],["Moratuwa","Western",6.773,79.8816,65,12.6,23.9],["Gampaha","Western",7.0917,79.9999,70,16.5,23.4],["Matale","Central",7.4675,80.6234,50,13.7,22.5],["Galle","Southern",6.0535,80.221,43,7.9,23.9],["Matara","Southern",5.9549,80.555,43,7.9,23.7],["Hambantota","Southern",6.1241,81.1185,28,2.6,25.6],["Jaffna","Northern",9.6615,80.0255,29,3.7,26.3],["Kandy","Central",7.2906,80.6337,52,13.4,21.0]]},{"t":"2026-10-10T14:30","avg":42,"d":[["Ampara","Eastern",7.2975,81.682,30,2.8,32.2],["Mullaitivu","Northern",9.2671,80.8142,22,4.5,29.3],["Trincomalee","Eastern",8.5874,81.2152,25,3.7,29.8],["Batticaloa","Eastern",7.7102,81.6924,25,1.8,30.4],["Kurunegala","North Western",7.4863,80.3623,58,3.9,25.0],["Monaragala","Uva",6.8728,81.3507,35,2.4,26.6],["Chilaw","North Western",7.5758,79.7953,42,4.6,28.1],["Anuradhapura","North Central",8.3114,80.4037,28,3.7,25.8],["Polonnaruwa","North Central",7.9403,81.0188,30,3.5,28.2],["Badulla","Uva",6.9934,81.055,35,2.4,24.9],["Kilinochchi","Northern",9.3803,80.377,21,4.6,31.7],["Puttalam","North Western",8.0408,79.8394,36,4.1,29.2],["Mannar","Northern",8.981,79.9044,24,3.3,28.5],["Matale","Central",7.4675,80.6234,47,2.9,25.2],["Jaffna","Northern",9.6615,80.0255,29,6.5,31.8],["Hambantota","Southern",6.1241,81.1185,47,7.1,29.3],["Matara","Southern",5.9549,80.555,47,5.2,26.9],["Galle","Southern",6.0535,80.221,47,5.2,27.6],["Nuwara Eliya","Central",6.9497,80.7891,44,5.7,17.9],["Kandy","Central",7.2906,80.6337,51,2.7,25.0],["Moratuwa","Western",6.773,79.8816,66,16.5,27.6],["Gampaha","Western",7.0917,79.9999,65,10.5,26.7],["Kalutara","Western",6.5854,79.9607,51,9.2,26.5],["Negombo","Western",7.2008,79.8737,65,10.5,28.9],["Colombo","Western",6.9271,79.8612,66,16.5,28.5],["Ratnapura","Sabaragamuwa",6.7056,80.3847,58,16.9,25.5],["Vavuniya","Northern",8.7514,80.4971,21,3.6,26.4],["Kegalle","Sabaragamuwa",7.2513,80.3464,66,6.9,25.4]]}], BANDS=[[50,"Good","#00e400","Air quality is satisfactory."],[100,"Moderate","#ffff00","Air quality is acceptable."],[150,"Unhealthy for sensitive groups","#ff7e00","Sensitive groups may be affected."],[200,"Unhealthy","#ff0000","Everyone may be affected."],[300,"Very unhealthy","#8f3f97","Health alert: everyone may be seriously affected."]], STAMP="2026-10-10 18:44";
+function cat(a){for(const b of BANDS){if(a<=b[0])return b;}
+ return [null,"Hazardous","#7e0023","Emergency conditions."];}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function fmt(t){return t.replace("T"," ");}
+window.addEventListener("load",function(){
+ const map=window["map_19946eafd0e7c089421fe0b9a8d6199e"];
+ map.invalidateSize();
+ const layer=L.layerGroup().addTo(map);
+ const stamp=document.getElementById("stamp");
+ const nav=document.getElementById("nav");
+ const buttons=[];
+
+ function draw(rows){
+  layer.clearLayers();
+  rows.forEach(function(r){
+   const aqi=r[4], c=cat(aqi), color=c[2], text=aqi>200?"#fff":"#000";
+   const tip="<div style='font-family:Arial;width:220px'><b>"+esc(r[0])+"</b> <small>("+esc(r[1])+
+    ")</small><br><span style='font-size:28px;font-weight:bold'>"+aqi+"</span> US AQI<br>"+
+    esc(c[1])+"<br><small>"+esc(c[3])+"</small><br><small>PM2.5: "+(r[5]==null?"n/a":r[5])+
+    " &micro;g/m&sup3; &middot; "+(r[6]==null?"n/a":r[6])+"&deg;C</small></div>";
+   const icon=L.divIcon({className:"",iconSize:[32,32],iconAnchor:[16,16],
+    html:"<div style='background:"+color+";color:"+text+";width:32px;height:32px;"+
+    "border-radius:50%;text-align:center;line-height:32px;font-weight:800;"+
+    "border:1px solid #555'>"+aqi+"</div>"});
+   L.marker([r[2],r[3]],{icon:icon}).bindTooltip(tip).addTo(layer);
+  });
+ }
+ function select(btn,rows,label){
+  buttons.forEach(function(b){b.classList.remove("active");});
+  btn.classList.add("active");
+  draw(rows);
+  stamp.innerHTML=label;
+  nav.classList.remove("open");
+ }
+ function showLive(){
+  select(document.getElementById("livebtn"),LIVE.d,
+   "FECT Sri Lanka AQI &middot; updated "+STAMP+" (SLST) &middot; Data: "+
+   "<a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0)");
+ }
+ const live=document.getElementById("livebtn");
+ buttons.push(live);
+ live.addEventListener("click",showLive);
+
+ const list=document.getElementById("navlist");
+ const days={};
+ SNAPS.slice().reverse().forEach(function(s){(days[s.t.slice(0,10)]=days[s.t.slice(0,10)]||[]).push(s);});
+ Object.keys(days).forEach(function(day){
+  const h=document.createElement("h2");
+  h.textContent=new Date(day+"T00:00:00").toLocaleDateString("en-GB",
+   {weekday:"short",day:"numeric",month:"short"});
+  list.appendChild(h);
+  days[day].forEach(function(s){
+   const b=document.createElement("button");
+   const chip=document.createElement("span");
+   const c=cat(s.avg);
+   chip.className="chip"; chip.textContent=s.avg; chip.style.background=c[2];
+   chip.style.color=s.avg>200?"#fff":"#000";
+   const t=document.createElement("span"); t.textContent=s.t.slice(11,16);
+   b.appendChild(t); b.appendChild(chip);
+   b.title="Average US AQI across cities";
+   b.addEventListener("click",function(){
+    select(b,s.d,"Past snapshot &middot; "+esc(fmt(s.t))+" (SLST) &middot; "+
+     "<a href='#' id='backlive'>Back to live</a>");
+    document.getElementById("backlive").addEventListener("click",function(e){
+     e.preventDefault();showLive();});
+   });
+   buttons.push(b); list.appendChild(b);
+  });
+ });
+ document.getElementById("navtoggle").addEventListener("click",function(){
+  nav.classList.toggle("open");});
+ showLive();
+});
+})();
+</script>
+    
+            <div class="folium-map" id="map_19946eafd0e7c089421fe0b9a8d6199e" ></div>
         
 </body>
 <script>
     
     
-            var map_5ea558d8c7f4b84b49aa7dda75230e47 = L.map(
-                "map_5ea558d8c7f4b84b49aa7dda75230e47",
+            var map_19946eafd0e7c089421fe0b9a8d6199e = L.map(
+                "map_19946eafd0e7c089421fe0b9a8d6199e",
                 {
                     center: [7.8731, 80.7718],
                     crs: L.CRS.EPSG3857,
@@ -79,7 +178,7 @@
 
         
     
-            var tile_layer_f8ebf42bc8aff658999d1fe817a23f17 = L.tileLayer(
+            var tile_layer_b0f0e2c1710758df924f71edca860bc8 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -96,791 +195,7 @@
             );
         
     
-            tile_layer_f8ebf42bc8aff658999d1fe817a23f17.addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
+            tile_layer_b0f0e2c1710758df924f71edca860bc8.addTo(map_19946eafd0e7c089421fe0b9a8d6199e);
         
-    
-            var marker_4217c803bdcc402d3a74a6183e12584e = L.marker(
-                [7.2975, 81.682],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_79feed67162cd69f856923e10dd2e02e = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e30\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_4217c803bdcc402d3a74a6183e12584e.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Ampara</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>30</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 2.8 &micro;g/m&sup3; &middot; 32.2&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_4217c803bdcc402d3a74a6183e12584e.setIcon(div_icon_79feed67162cd69f856923e10dd2e02e);
-            
-    
-            var marker_2656630ef31b3ab6b3ed50145f069827 = L.marker(
-                [9.2671, 80.8142],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_804272298796c890dbb16c1838e459fb = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e22\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_2656630ef31b3ab6b3ed50145f069827.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Mullaitivu</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>22</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 4.5 &micro;g/m&sup3; &middot; 29.3&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_2656630ef31b3ab6b3ed50145f069827.setIcon(div_icon_804272298796c890dbb16c1838e459fb);
-            
-    
-            var marker_df8c91d12e1f386cd16d0ffd8aa7c450 = L.marker(
-                [8.5874, 81.2152],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_9026e7b204a3bc35b3bd60a6b4f1ceba = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e25\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_df8c91d12e1f386cd16d0ffd8aa7c450.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Trincomalee</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>25</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 3.7 &micro;g/m&sup3; &middot; 29.8&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_df8c91d12e1f386cd16d0ffd8aa7c450.setIcon(div_icon_9026e7b204a3bc35b3bd60a6b4f1ceba);
-            
-    
-            var marker_91b1b1e293e7c674a8c6d4bfe7c65bef = L.marker(
-                [7.7102, 81.6924],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_632430014f4ba8a60dee7b28aa3fd2ea = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e25\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_91b1b1e293e7c674a8c6d4bfe7c65bef.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Batticaloa</b> <small>(Eastern)</small><br><span style='font-size:28px;font-weight:bold'>25</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 1.8 &micro;g/m&sup3; &middot; 30.4&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_91b1b1e293e7c674a8c6d4bfe7c65bef.setIcon(div_icon_632430014f4ba8a60dee7b28aa3fd2ea);
-            
-    
-            var marker_56b21e9481f1d8bba2f6f7dfbc2c1a16 = L.marker(
-                [7.4863, 80.3623],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_0d3abe7ef2444e026f1d4c5359f49255 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e58\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_56b21e9481f1d8bba2f6f7dfbc2c1a16.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kurunegala</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>58</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 3.9 &micro;g/m&sup3; &middot; 25.0&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_56b21e9481f1d8bba2f6f7dfbc2c1a16.setIcon(div_icon_0d3abe7ef2444e026f1d4c5359f49255);
-            
-    
-            var marker_dc5a0b8dc44d7d5eae45542c976ef70c = L.marker(
-                [6.8728, 81.3507],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_ef5bc93919845f78d320d8bc73afdb87 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e35\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_dc5a0b8dc44d7d5eae45542c976ef70c.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Monaragala</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>35</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 2.4 &micro;g/m&sup3; &middot; 26.6&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_dc5a0b8dc44d7d5eae45542c976ef70c.setIcon(div_icon_ef5bc93919845f78d320d8bc73afdb87);
-            
-    
-            var marker_2342f6d7e6926aa517991d38f4a099a3 = L.marker(
-                [7.5758, 79.7953],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_fcdfefd3ff1797256216058b16d66a5c = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e42\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_2342f6d7e6926aa517991d38f4a099a3.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Chilaw</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>42</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 4.6 &micro;g/m&sup3; &middot; 28.1&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_2342f6d7e6926aa517991d38f4a099a3.setIcon(div_icon_fcdfefd3ff1797256216058b16d66a5c);
-            
-    
-            var marker_48ff2a4291abfdce6e85b4d6d827d974 = L.marker(
-                [8.3114, 80.4037],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_edd3104e5edcbfc8760f86a41bd1ca4d = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e28\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_48ff2a4291abfdce6e85b4d6d827d974.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Anuradhapura</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>28</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 3.7 &micro;g/m&sup3; &middot; 25.8&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_48ff2a4291abfdce6e85b4d6d827d974.setIcon(div_icon_edd3104e5edcbfc8760f86a41bd1ca4d);
-            
-    
-            var marker_47b48d97044c4bc863afa64d9c4b56a9 = L.marker(
-                [7.9403, 81.0188],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_d14f91c8f6a36056093135afc9c21d61 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e30\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_47b48d97044c4bc863afa64d9c4b56a9.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Polonnaruwa</b> <small>(North Central)</small><br><span style='font-size:28px;font-weight:bold'>30</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 3.5 &micro;g/m&sup3; &middot; 28.2&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_47b48d97044c4bc863afa64d9c4b56a9.setIcon(div_icon_d14f91c8f6a36056093135afc9c21d61);
-            
-    
-            var marker_fe409ec9b53dd72cb0632ed6324ccd42 = L.marker(
-                [6.9934, 81.055],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_c02f9f6de978038b0d372e8cb99ac82a = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e35\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_fe409ec9b53dd72cb0632ed6324ccd42.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Badulla</b> <small>(Uva)</small><br><span style='font-size:28px;font-weight:bold'>35</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 2.4 &micro;g/m&sup3; &middot; 24.9&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_fe409ec9b53dd72cb0632ed6324ccd42.setIcon(div_icon_c02f9f6de978038b0d372e8cb99ac82a);
-            
-    
-            var marker_003a37cfe9682d8fde3980f76d5ab912 = L.marker(
-                [9.3803, 80.377],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_039e1f8876acb0931f575cc6f3a52c8b = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e21\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_003a37cfe9682d8fde3980f76d5ab912.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kilinochchi</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>21</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 4.6 &micro;g/m&sup3; &middot; 31.7&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_003a37cfe9682d8fde3980f76d5ab912.setIcon(div_icon_039e1f8876acb0931f575cc6f3a52c8b);
-            
-    
-            var marker_b5f31ce7f967bee3d8a3652f3b8bdbc1 = L.marker(
-                [8.0408, 79.8394],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_d422ac9e3947e7e27d221ed3ed4fd66b = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e36\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_b5f31ce7f967bee3d8a3652f3b8bdbc1.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Puttalam</b> <small>(North Western)</small><br><span style='font-size:28px;font-weight:bold'>36</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 4.1 &micro;g/m&sup3; &middot; 29.2&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_b5f31ce7f967bee3d8a3652f3b8bdbc1.setIcon(div_icon_d422ac9e3947e7e27d221ed3ed4fd66b);
-            
-    
-            var marker_a34a5ffce9b92183d752007d44c9cfa0 = L.marker(
-                [8.981, 79.9044],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_7a0c7cea21679057e044629d509e82ab = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e24\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_a34a5ffce9b92183d752007d44c9cfa0.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Mannar</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>24</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 3.3 &micro;g/m&sup3; &middot; 28.5&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_a34a5ffce9b92183d752007d44c9cfa0.setIcon(div_icon_7a0c7cea21679057e044629d509e82ab);
-            
-    
-            var marker_87ac490c21cfd620d12a08f329da5976 = L.marker(
-                [7.4675, 80.6234],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_e2d65584f1f1f1ef54b542217f07812c = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e47\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_87ac490c21cfd620d12a08f329da5976.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Matale</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>47</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 2.9 &micro;g/m&sup3; &middot; 25.2&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_87ac490c21cfd620d12a08f329da5976.setIcon(div_icon_e2d65584f1f1f1ef54b542217f07812c);
-            
-    
-            var marker_29ad471a035fe0843fdf47a97b3f08bf = L.marker(
-                [9.6615, 80.0255],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_b076e82b721015bc0d31086c17455110 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e29\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_29ad471a035fe0843fdf47a97b3f08bf.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Jaffna</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>29</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 6.5 &micro;g/m&sup3; &middot; 31.8&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_29ad471a035fe0843fdf47a97b3f08bf.setIcon(div_icon_b076e82b721015bc0d31086c17455110);
-            
-    
-            var marker_482659841f2e7febe05c0c6699cd0047 = L.marker(
-                [6.1241, 81.1185],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_f6a5a3bcb64c539cece4eb19c5c9551c = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e47\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_482659841f2e7febe05c0c6699cd0047.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Hambantota</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>47</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 7.1 &micro;g/m&sup3; &middot; 29.3&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_482659841f2e7febe05c0c6699cd0047.setIcon(div_icon_f6a5a3bcb64c539cece4eb19c5c9551c);
-            
-    
-            var marker_40a03ae7134117d20744b7be93edfce7 = L.marker(
-                [5.9549, 80.555],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_661be81ba32685217ba9539460ef94a1 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e47\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_40a03ae7134117d20744b7be93edfce7.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Matara</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>47</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 5.2 &micro;g/m&sup3; &middot; 26.9&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_40a03ae7134117d20744b7be93edfce7.setIcon(div_icon_661be81ba32685217ba9539460ef94a1);
-            
-    
-            var marker_8863aad1166391b7d21fef591aa07065 = L.marker(
-                [6.0535, 80.221],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_9a5aacc37e2adb89b80f9a2a2a995fa8 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e47\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_8863aad1166391b7d21fef591aa07065.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Galle</b> <small>(Southern)</small><br><span style='font-size:28px;font-weight:bold'>47</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 5.2 &micro;g/m&sup3; &middot; 27.6&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_8863aad1166391b7d21fef591aa07065.setIcon(div_icon_9a5aacc37e2adb89b80f9a2a2a995fa8);
-            
-    
-            var marker_5866f8ee4dd54f78648e118f4a6f9310 = L.marker(
-                [6.9497, 80.7891],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_4ae2fd1e3ebe31dab38d5d071673421a = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e44\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_5866f8ee4dd54f78648e118f4a6f9310.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Nuwara Eliya</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>44</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 5.7 &micro;g/m&sup3; &middot; 17.9&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_5866f8ee4dd54f78648e118f4a6f9310.setIcon(div_icon_4ae2fd1e3ebe31dab38d5d071673421a);
-            
-    
-            var marker_dbf7f71d1e741175f893d6189dd6bb00 = L.marker(
-                [7.2906, 80.6337],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_dcbc747bd29e34318901e3495c591d6d = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e51\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_dbf7f71d1e741175f893d6189dd6bb00.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kandy</b> <small>(Central)</small><br><span style='font-size:28px;font-weight:bold'>51</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 2.7 &micro;g/m&sup3; &middot; 25.0&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_dbf7f71d1e741175f893d6189dd6bb00.setIcon(div_icon_dcbc747bd29e34318901e3495c591d6d);
-            
-    
-            var marker_02e7a16514e198a5c5f401c6af5a7e11 = L.marker(
-                [6.773, 79.8816],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_3d00b253ffb9ff02cdcb6c7a3b51fd95 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e66\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_02e7a16514e198a5c5f401c6af5a7e11.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Moratuwa</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>66</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.5 &micro;g/m&sup3; &middot; 27.6&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_02e7a16514e198a5c5f401c6af5a7e11.setIcon(div_icon_3d00b253ffb9ff02cdcb6c7a3b51fd95);
-            
-    
-            var marker_786a4ff2caa0164f19a482ae48e88e53 = L.marker(
-                [7.0917, 79.9999],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_f20badc68b1ce60c91e35f49694fd949 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e65\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_786a4ff2caa0164f19a482ae48e88e53.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Gampaha</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>65</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.5 &micro;g/m&sup3; &middot; 26.7&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_786a4ff2caa0164f19a482ae48e88e53.setIcon(div_icon_f20badc68b1ce60c91e35f49694fd949);
-            
-    
-            var marker_18fddeb9342893b76f37541549231629 = L.marker(
-                [6.5854, 79.9607],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_e26606a22aa7faa301bb9eb308b6b177 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e51\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_18fddeb9342893b76f37541549231629.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kalutara</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>51</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 9.2 &micro;g/m&sup3; &middot; 26.5&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_18fddeb9342893b76f37541549231629.setIcon(div_icon_e26606a22aa7faa301bb9eb308b6b177);
-            
-    
-            var marker_267a08e071d27fe17673d99fde34729b = L.marker(
-                [7.2008, 79.8737],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_79887fddbfb765f2d360345b1638631e = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e65\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_267a08e071d27fe17673d99fde34729b.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Negombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>65</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 10.5 &micro;g/m&sup3; &middot; 28.9&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_267a08e071d27fe17673d99fde34729b.setIcon(div_icon_79887fddbfb765f2d360345b1638631e);
-            
-    
-            var marker_46f2946d4930bc37e5b8e8c9f3eea9cf = L.marker(
-                [6.9271, 79.8612],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_3cecd986e1c1202f21a8c38b2283e257 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e66\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_46f2946d4930bc37e5b8e8c9f3eea9cf.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Colombo</b> <small>(Western)</small><br><span style='font-size:28px;font-weight:bold'>66</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.5 &micro;g/m&sup3; &middot; 28.5&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_46f2946d4930bc37e5b8e8c9f3eea9cf.setIcon(div_icon_3cecd986e1c1202f21a8c38b2283e257);
-            
-    
-            var marker_f45a17239d8e0924eaef961ad647d4d1 = L.marker(
-                [6.7056, 80.3847],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_75697035042e471070b2a6d3074d6ebd = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e58\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_f45a17239d8e0924eaef961ad647d4d1.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Ratnapura</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>58</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 16.9 &micro;g/m&sup3; &middot; 25.5&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_f45a17239d8e0924eaef961ad647d4d1.setIcon(div_icon_75697035042e471070b2a6d3074d6ebd);
-            
-    
-            var marker_1e03b7c61491a24ca38b5e958fc28f9a = L.marker(
-                [8.7514, 80.4971],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_1460926a0ba631c63b3f873b4384ee06 = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#00e400;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e21\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_1e03b7c61491a24ca38b5e958fc28f9a.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Vavuniya</b> <small>(Northern)</small><br><span style='font-size:28px;font-weight:bold'>21</span> US AQI<br>Good<br><small>Air quality is satisfactory.</small><br><small>PM2.5: 3.6 &micro;g/m&sup3; &middot; 26.4&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_1e03b7c61491a24ca38b5e958fc28f9a.setIcon(div_icon_1460926a0ba631c63b3f873b4384ee06);
-            
-    
-            var marker_afd757c146b6b67233d812d70b6a1e84 = L.marker(
-                [7.2513, 80.3464],
-                {
-}
-            ).addTo(map_5ea558d8c7f4b84b49aa7dda75230e47);
-        
-    
-            var div_icon_c6d6cc8a837be3c04959c0d4362a34fb = L.divIcon({
-  "html": "\u003cdiv style=\u0027background:#ffff00;color:#000;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:800;border:1px solid #555\u0027\u003e66\u003c/div\u003e",
-  "iconSize": [32, 32],
-  "iconAnchor": [16, 16],
-  "className": "empty",
-});
-        
-    
-            marker_afd757c146b6b67233d812d70b6a1e84.bindTooltip(
-                `<div>
-                     <div style='font-family:Arial;width:220px'><b>Kegalle</b> <small>(Sabaragamuwa)</small><br><span style='font-size:28px;font-weight:bold'>66</span> US AQI<br>Moderate<br><small>Air quality is acceptable.</small><br><small>PM2.5: 6.9 &micro;g/m&sup3; &middot; 25.4&deg;C<br>Observed 2026-10-10T14:30</small></div>
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_afd757c146b6b67233d812d70b6a1e84.setIcon(div_icon_c6d6cc8a837be3c04959c0d4362a34fb);
-            
 </script>
 </html>

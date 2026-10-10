@@ -23,6 +23,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m fect_weather collect
+      - run: python -m fect_weather prune
       - run: python -m fect_weather map
       - name: Commit changes
         run: |

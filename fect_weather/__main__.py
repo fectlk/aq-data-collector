@@ -4,15 +4,18 @@ import sys
 from .collector import collect
 from .mapper import build_map
 from .report import weekly_report
+from .retention import prune
 
 
 def main() -> int:
     p = argparse.ArgumentParser(prog="fect_weather")
-    p.add_argument("command", choices=["collect", "map", "report"])
+    p.add_argument("command", choices=["collect", "prune", "map", "report"])
     args = p.parse_args()
 
     if args.command == "collect":
         print(f"Wrote {collect()} new rows")
+    elif args.command == "prune":
+        print(f"Removed {prune()} old rows")
     elif args.command == "map":
         print(f"Saved {build_map()}")
     else:
