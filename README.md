@@ -10,7 +10,7 @@ for 28 cities across all 9 provinces of Sri Lanka. Built for [FECT](https://gith
 | Step | What | Schedule (Sri Lanka time) |
 |------|------|---------------------------|
 | Collect | GitHub Actions calls the [Open-Meteo](https://open-meteo.com/) API (2 requests for all cities) and appends rows to `data/YYYY-MM.csv` | every 3 hours |
-| Prune | Deletes data older than 7 days (`python -m fect_weather prune`) | after each collection |
+| Prune | Deletes data older than 14 days (`python -m fect_weather prune`) | after each collection |
 | Map | Rebuilds `docs/index.html`: live map plus a left menu of past snapshots (one file, published with GitHub Pages) | after each collection |
 | Report | Weekly Excel summary in `reports/` | Mondays 08:00 |
 
@@ -40,7 +40,7 @@ python -m fect_weather collect   # fetch and append data
 python -m fect_weather iqair     # IQAir city readings (needs IQAIR_API_KEY)
 python -m fect_weather openweather  # OpenWeather air pollution (needs OPENWEATHER_API_KEY)
 python -m fect_weather waqi         # AQICN stations (needs WAQI_TOKEN)
-python -m fect_weather prune     # drop data older than 7 days
+python -m fect_weather prune     # drop data older than 14 days
 python -m fect_weather map       # build docs/index.html
 python -m fect_weather report    # last week's Excel summary
 ```

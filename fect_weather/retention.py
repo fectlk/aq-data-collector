@@ -1,8 +1,8 @@
 """Keep only the last N days of data (Sri Lanka dates).
 
 Pruning works on whole days: a row is kept if its observation date is on or after
-`today - days`. With days=7 this keeps last Monday on a Monday morning, so the weekly
-report (previous Mon-Sun) still sees the full week before old days drop off.
+`today - days`. With days=14 up to 15 calendar days are kept, which also leaves last week's Monday-Sunday
+intact for the weekly report.
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 from .collector import TZ
 
-RETENTION_DAYS = 7
+RETENTION_DAYS = 14
 
 
 def prune(data_dir: str | Path = "data", days: int = RETENTION_DAYS,

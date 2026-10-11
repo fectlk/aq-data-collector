@@ -104,23 +104,72 @@ def build_waqi(df: pd.DataFrame) -> dict:
 
 _CSS = """
 <style>
-#nav{position:fixed;top:0;bottom:0;left:0;width:230px;background:#fff;z-index:1000;
- border-right:1px solid #d0d0d0;overflow-y:auto;font:13px Arial,sans-serif;color:#222}
-#nav h1{font-size:15px;margin:0;padding:12px 12px 8px}
-#nav h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#777;
- margin:14px 12px 4px}
+#nav{position:fixed;top:0;bottom:0;left:0;width:230px;z-index:1000;overflow:hidden;
+ display:flex;flex-direction:column;
+ background:linear-gradient(180deg,#0f172a 0%,#17233b 100%);color:#e2e8f0;
+ font:13px/1.4 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+ box-shadow:3px 0 14px rgba(0,0,0,.35);scrollbar-width:thin;
+ scrollbar-color:#3b4a66 transparent}
+#navlist::-webkit-scrollbar{width:6px}
+#navlist::-webkit-scrollbar-thumb{background:#3b4a66;border-radius:3px}
+#nav h1{display:flex;align-items:center;gap:9px;margin:0;padding:16px 14px 12px;
+ font-size:15px;font-weight:700;letter-spacing:.02em;color:#fff;
+ border-bottom:1px solid rgba(255,255,255,.08)}
+#nav h1::before{content:"";flex:none;width:14px;height:14px;border-radius:50%;
+ background:conic-gradient(#00e400,#ffff00,#ff7e00,#ff0000,#8f3f97,#00e400);
+ box-shadow:0 0 8px rgba(255,255,255,.35)}
 #nav button{display:flex;justify-content:space-between;align-items:center;width:100%;
- border:0;background:none;padding:6px 12px;font:inherit;cursor:pointer;text-align:left}
-#nav button:hover{background:#f0f3f7}
-#nav button.active{background:#e3eefc;font-weight:bold}
-#nav .live{font-size:14px;padding:10px 12px;color:#0a7a2f}
-#nav .chip{min-width:26px;text-align:center;border-radius:10px;padding:1px 6px;
- font-size:11px;font-weight:bold;border:1px solid #888}
-#views{display:flex;flex-wrap:wrap;gap:4px;padding:0 12px 6px}
-#views button{width:auto;flex:1 1 30%;justify-content:center;border:1px solid #bbb;
- border-radius:6px;padding:4px 2px;font-size:12px}
-#views button.active{background:#0b5ed7;color:#fff;border-color:#0b5ed7}
-#syncrow{padding:0 12px 6px;font-size:12px;color:#555}
+ border:0;background:none;color:inherit;padding:7px 14px;font:inherit;cursor:pointer;
+ text-align:left;transition:background .15s,transform .15s,box-shadow .15s}
+#views{display:flex;flex-wrap:wrap;gap:5px;margin:12px 12px 8px;padding:5px;
+ background:rgba(255,255,255,.06);border-radius:12px}
+#views button{width:auto;flex:1 1 30%;justify-content:center;padding:6px 2px;
+ border-radius:8px;font-size:12px;font-weight:600;color:#b6c2dc}
+#views button:hover{background:rgba(255,255,255,.1);color:#fff}
+#views button.active{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;
+ box-shadow:0 2px 8px rgba(59,130,246,.45)}
+#syncrow{padding:0 14px 10px;font-size:12px;color:#94a3c4}
+#syncrow input{accent-color:#3b82f6;vertical-align:-2px;margin-right:4px}
+#nav .live{width:calc(100% - 24px);margin:2px 12px 6px;padding:11px 14px;border-radius:12px;
+ font-size:14px;font-weight:700;color:#4ade80;background:rgba(34,197,94,.1);
+ border:1px solid rgba(74,222,128,.35);animation:livepulse 2.4s ease-in-out infinite}
+#nav .live:hover{background:rgba(34,197,94,.2)}
+#nav .live.active{color:#052e16;background:linear-gradient(135deg,#4ade80,#22c55e);
+ border-color:transparent}
+@keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.35)}
+ 50%{box-shadow:0 0 0 6px rgba(74,222,128,0)}}
+#navlist{flex:1 1 auto;min-height:0;overflow-y:auto;margin:0 6px 8px 16px;padding:0 6px 0 14px;
+ background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)) 7px 0/2px 100% no-repeat;
+ background-attachment:local;scrollbar-width:thin;scrollbar-color:#3b4a66 transparent}
+#navlist details{margin:6px 0 4px}
+#navlist summary{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;
+ margin-left:4px;padding:7px 10px 7px 12px;border-radius:8px;font-size:11px;font-weight:700;
+ letter-spacing:.08em;text-transform:uppercase;color:#9fb0d0;
+ transition:background .15s,color .15s}
+#navlist summary::-webkit-details-marker{display:none}
+#navlist summary::before{content:"\\25B8";font-size:12px;transition:transform .15s}
+#navlist details[open]>summary::before{transform:rotate(90deg)}
+#navlist summary:hover{background:rgba(255,255,255,.08);color:#fff}
+#navlist summary .cnt{margin-left:auto;min-width:18px;text-align:center;border-radius:999px;
+ padding:0 6px;font-size:10px;background:rgba(255,255,255,.1);color:#cbd5e1}
+#navlist button{position:relative;width:calc(100% - 4px);margin:2px 0 2px 4px;
+ padding:6px 10px 6px 14px;border-radius:8px;color:#cbd5e1}
+#navlist button::before{content:"";position:absolute;left:-16px;top:50%;width:8px;height:8px;
+ margin-top:-4px;border-radius:50%;background:#475569;border:2px solid #17233b;
+ transition:background .15s,transform .15s}
+#navlist button:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateX(2px)}
+#navlist button:hover::before{background:#94a3b8}
+#navlist button.active{background:rgba(59,130,246,.22);color:#fff;font-weight:700;
+ box-shadow:inset 3px 0 0 #60a5fa}
+#navlist button.active::before{background:#60a5fa;transform:scale(1.4);
+ box-shadow:0 0 8px #60a5fa}
+#navfoot{flex:none;padding:10px 14px 12px;font-size:11px;line-height:1.5;color:#8fa0c2;
+ border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)}
+#navfoot a{color:#93c5fd;text-decoration:none}
+#navfoot a:hover{text-decoration:underline}
+#nav .chip{min-width:28px;text-align:center;border-radius:999px;padding:1px 7px;
+ font-size:11px;font-weight:700;border:1px solid rgba(0,0,0,.25);
+ box-shadow:0 1px 3px rgba(0,0,0,.35)}
 #map2,#map3,#map4{position:fixed;z-index:0;box-sizing:border-box;border:1px solid #777}
 .folium-map{box-sizing:border-box;border:1px solid #777}
 .maptag{background:#fff;padding:4px 8px;border-radius:6px;font:12px Arial;
@@ -170,6 +219,7 @@ _HTML = """
  <div id="syncrow"><label><input type="checkbox" id="sync" checked> Sync zoom &amp; pan</label></div>
  <button class="live" id="livebtn">&#9679; Live maps</button>
  <div id="navlist"></div>
+ <div id="navfoot"></div>
 </div>
 <div id="map2"></div><div id="map3"></div><div id="map4"></div>
 <div id="stamp"></div>
@@ -255,16 +305,16 @@ window.addEventListener("load",function(){
   draw(rows);
   SRC.forEach(function(src){drawStations(src,t);});
   stamp.innerHTML=label;
+  stamp.style.display=label?"block":"none";
   nav.classList.remove("open");
  }
- function showLive(){
-  select(document.getElementById("livebtn"),LIVE.d,null,
-   "FECT Sri Lanka AQI &middot; updated "+STAMP+" (SLST) &middot; Data: "+
-   "<a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0), "+
-   "<a href='https://www.iqair.com/'>IQAir</a>, "+
-   "<a href='https://openweathermap.org/'>OpenWeather</a>, "+
-   "<a href='https://aqicn.org/'>World Air Quality Index project</a>");
- }
+ function showLive(){select(document.getElementById("livebtn"),LIVE.d,null,"");}
+ document.getElementById("navfoot").innerHTML=
+  "FECT Sri Lanka AQI &middot; updated "+STAMP+" (SLST) &middot; Data: "+
+  "<a href='https://open-meteo.com/'>Open-Meteo</a> (CC BY 4.0), "+
+  "<a href='https://www.iqair.com/'>IQAir</a>, "+
+  "<a href='https://openweathermap.org/'>OpenWeather</a>, "+
+  "<a href='https://aqicn.org/'>World Air Quality Index project</a>";
  const live=document.getElementById("livebtn");
  buttons.push(live);
  live.addEventListener("click",showLive);
@@ -272,11 +322,17 @@ window.addEventListener("load",function(){
  const list=document.getElementById("navlist");
  const days={};
  SNAPS.slice().reverse().forEach(function(s){(days[s.t.slice(0,10)]=days[s.t.slice(0,10)]||[]).push(s);});
- Object.keys(days).forEach(function(day){
-  const h=document.createElement("h2");
-  h.textContent=new Date(day+"T00:00:00").toLocaleDateString("en-GB",
+ Object.keys(days).forEach(function(day,i){
+  const det=document.createElement("details");
+  det.open=(i===0);
+  const sum=document.createElement("summary");
+  const name=document.createElement("span");
+  name.textContent=new Date(day+"T00:00:00").toLocaleDateString("en-GB",
    {weekday:"short",day:"numeric",month:"short"});
-  list.appendChild(h);
+  const cnt=document.createElement("span");
+  cnt.className="cnt"; cnt.textContent=days[day].length;
+  sum.appendChild(name); sum.appendChild(cnt); det.appendChild(sum);
+  list.appendChild(det);
   days[day].forEach(function(s){
    const b=document.createElement("button");
    const chip=document.createElement("span");
@@ -292,7 +348,7 @@ window.addEventListener("load",function(){
     document.getElementById("backlive").addEventListener("click",function(e){
      e.preventDefault();showLive();});
    });
-   buttons.push(b); list.appendChild(b);
+   buttons.push(b); det.appendChild(b);
   });
  });
 
