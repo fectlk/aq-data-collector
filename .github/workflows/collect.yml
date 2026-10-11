@@ -30,6 +30,16 @@ jobs:
           done
           exit 1
         continue-on-error: true
+      - name: AQICN stations (optional, needs WAQI_TOKEN secret)
+        run: python -m fect_weather waqi
+        continue-on-error: true
+        env:
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+      - name: OpenWeather air pollution (optional, needs OPENWEATHER_API_KEY secret)
+        run: python -m fect_weather openweather
+        continue-on-error: true
+        env:
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
       - name: IQAir stations (optional, needs IQAIR_API_KEY secret)
         run: python -m fect_weather iqair
         continue-on-error: true

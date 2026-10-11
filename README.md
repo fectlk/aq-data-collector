@@ -38,6 +38,8 @@ Old files are kept in `archive/`.
 pip install -r requirements.txt
 python -m fect_weather collect   # fetch and append data
 python -m fect_weather iqair     # IQAir city readings (needs IQAIR_API_KEY)
+python -m fect_weather openweather  # OpenWeather air pollution (needs OPENWEATHER_API_KEY)
+python -m fect_weather waqi         # AQICN stations (needs WAQI_TOKEN)
 python -m fect_weather prune     # drop data older than 7 days
 python -m fect_weather map       # build docs/index.html
 python -m fect_weather report    # last week's Excel summary

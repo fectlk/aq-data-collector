@@ -169,3 +169,60 @@ def test_collect_survives_weather_timeout(tmp_path, monkeypatch):
     cities = tmp_path / "cities.csv"
     cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\n")
     assert collector.collect(cities, tmp_path / "data", session=object()) == 1
+
+
+def test_us_aqi_from_pm():
+    from fect_weather.aqi import us_aqi
+
+    assert us_aqi(9.0) == 50 and us_aqi(35.4) == 100 and us_aqi(0.0) == 0
+    assert us_aqi(None, None) is None
+    assert us_aqi(1000) == 500
+    assert 170 <= us_aqi(10, 300) <= 175  # PM10 sub-index is the higher one
+
+
+class _FakeOWM:
+    def get(self, url, params=None, timeout=None):
+        return _Resp({"coord": {}, "list": [{
+            "dt": 1791622800, "main": {"aqi": 3},
+            "components": {"pm2_5": 20.0, "pm10": 40.0, "o3": 50, "no2": 5, "so2": 1, "co": 200}}]})
+
+
+def test_openweather_collect(tmp_path):
+    from fect_weather.openweather import collect_openweather
+
+    cities = tmp_path / "cities.csv"
+    cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\nCentral,Kandy,7.3,80.6\n")
+    out = tmp_path / "data" / "openweather"
+    assert collect_openweather(cities, out, api_key="x", session=_FakeOWM(), delay=0) == 2
+    assert collect_openweather(cities, out, api_key="x", session=_FakeOWM(), delay=0) == 0
+    with open(next(out.glob("*.csv")), encoding="utf-8") as f:
+        row = next(csv.DictReader(f))
+    assert row["us_aqi"] == "71" and row["observed_at"] == "2026-10-10T14:30"
+
+
+class _FakeWAQI:
+    def get(self, url, params=None, timeout=None):
+        return _Resp({"status": "ok", "data": [
+            {"lat": 6.9, "lon": 79.86, "uid": 1, "aqi": "88",
+             "station": {"name": "Colombo US Embassy", "time": "2026-10-10T14:00:00+05:30"}},
+            {"lat": 7.3, "lon": 80.6, "uid": 2, "aqi": "-",
+             "station": {"name": "Kandy", "time": "2026-10-10T14:00:00+05:30"}}]})
+
+
+def test_waqi_collect_and_four_maps(tmp_path, monkeypatch):
+    from fect_weather.openweather import collect_openweather
+    from fect_weather.waqi import collect_waqi
+
+    data = tmp_path / "data"
+    assert collect_waqi(data / "waqi", token="x", session=_FakeWAQI()) == 1  # "-" skipped
+    assert collect_waqi(data / "waqi", token="x", session=_FakeWAQI()) == 0
+    cities = tmp_path / "cities.csv"
+    cities.write_text("province,city,lat,lon\nWestern,Colombo,6.9,79.8\n")
+    collect_openweather(cities, data / "openweather", api_key="x", session=_FakeOWM(), delay=0)
+    monkeypatch.setattr(collector, "fetch_current", _fake_fetch)
+    collector.collect(cities, data, session=object())
+
+    out = build_map(data, tmp_path / "docs" / "index.html")
+    html = out.read_text(encoding="utf-8")
+    assert 'id="map3"' in html and 'id="map4"' in html
+    assert "Colombo US Embassy" in html and "OpenWeather" in html
