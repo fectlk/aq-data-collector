@@ -57,8 +57,9 @@ def collect_waqi(data_dir="data/waqi", token=None, session=None) -> int:
         print(f"WAQI: {exc}")
         return 0
     if body.get("status") != "ok":
-        print(f"WAQI: {body.get('data')}")
+        print(f"WAQI: API said {body.get('status')!r}: {body.get('data')}")
         return 0
+    stations = body.get("data") or []
 
     path = Path(data_dir) / f"{now:%Y-%m}.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -66,8 +67,10 @@ def collect_waqi(data_dir="data/waqi", token=None, session=None) -> int:
     if path.exists():
         with open(path, newline="", encoding="utf-8") as f:
             seen = {(r["uid"], r["observed_at"]) for r in csv.DictReader(f)}
+    parsed = parse_stations(body, now)
+    print(f"WAQI: {len(stations)} stations in the box, {len(parsed)} with a current reading")
     rows = []
-    for row in parse_stations(body, now):
+    for row in parsed:
         k = (str(row["uid"]), row["observed_at"])
         if k not in seen:
             seen.add(k)
