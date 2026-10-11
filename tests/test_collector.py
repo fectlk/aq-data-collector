@@ -226,3 +226,21 @@ def test_waqi_collect_and_four_maps(tmp_path, monkeypatch):
     html = out.read_text(encoding="utf-8")
     assert 'id="map3"' in html and 'id="map4"' in html
     assert "Colombo US Embassy" in html and "OpenWeather" in html
+
+
+def test_waqi_retries_without_networks(tmp_path):
+    from fect_weather.waqi import collect_waqi
+
+    class Picky(_FakeWAQI):
+        def __init__(self):
+            self.calls = []
+
+        def get(self, url, params=None, timeout=None):
+            self.calls.append(dict(params))
+            if "networks" in params:  # pretend 'all' is rejected
+                return _Resp({"status": "error", "data": "bad networks"})
+            return super().get(url, params, timeout)
+
+    api = Picky()
+    assert collect_waqi(tmp_path / "waqi", token="x", session=api) == 1
+    assert api.calls[0]["networks"] == "all" and "networks" not in api.calls[1]

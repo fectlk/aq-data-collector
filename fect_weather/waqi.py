@@ -51,11 +51,20 @@ def collect_waqi(data_dir="data/waqi", token=None, session=None) -> int:
         raise RuntimeError("WAQI_TOKEN is not set")
     session = session or make_session()
     now = datetime.now(TZ)
-    try:
-        body = session.get(URL, params={"latlng": BOUNDS, "token": token}, timeout=30).json()
-    except (requests.RequestException, ValueError) as exc:
-        print(f"WAQI: {exc}")
-        return 0
+    # networks=all also returns the low-cost AirNet/AirShare sensors, which is where most
+    # Sri Lankan stations are; if the API rejects it, fall back to the default networks.
+    body: dict = {}
+    for extra in ({"networks": "all"}, {}):
+        try:
+            body = session.get(URL, params={"latlng": BOUNDS, "token": token, **extra},
+                               timeout=30).json()
+        except (requests.RequestException, ValueError) as exc:
+            print(f"WAQI: {exc}")
+            return 0
+        if body.get("status") == "ok" and body.get("data"):
+            break
+        print(f"WAQI: {extra or 'default networks'}: status {body.get('status')!r}, "
+              f"{len(body.get('data') or [])} stations")
     if body.get("status") != "ok":
         print(f"WAQI: API said {body.get('status')!r}: {body.get('data')}")
         return 0
