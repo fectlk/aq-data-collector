@@ -815,3 +815,26 @@ collected_at,observed_at,province,query_city,iq_city,iq_state,lat,lon,us_aqi,mai
 2026-10-18T16:37:42+05:30,2026-10-18T15:30,Western,Gampaha,Gampaha,Western,7.0897,79.9925,11,p2,30,65,2.78,1007
 2026-10-18T16:37:42+05:30,2026-10-18T15:30,Western,Negombo,Negombo,Western,7.2083,79.8358,6,p2,28,77,2.78,1010
 2026-10-18T16:37:42+05:30,2026-10-18T15:30,Western,Nugegoda,Nugegoda,Western,6.87485,79.89345,11,p2,29,70,3.33,1009
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Central,Nuwara Eliya,Nuwara Eliya,Central,6.97078,80.78286,44,p2,15,95,1.11,1062
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Eastern Province,Ampara,Ampara,Eastern Province,7.29754,81.68202,60,p2,26,87,0,1012
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Eastern Province,Trincomalee,Trincomalee,Eastern Province,8.5711,81.2335,22,p2,28,80,3.33,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,North Central,Anuradhapura,Anuradhapura,North Central,8.31223,80.41306,38,p2,26,86,2.22,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,North Central,Polonnaruwa,Polonnaruwa,North Central,7.93965,81.00274,52,p2,26,89,0.56,1011
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,North Western,Chilaw,Chilaw,North Western,7.57583,79.79528,17,p2,29,77,4.17,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,North Western,Kurunegala,Kurunegala,North Western,7.4863,80.3623,33,p2,25,96,0.83,1006
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,North Western,Puttalam,Puttalam,North Western,8.0362,79.8283,47,p2,28,80,3.89,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Northern Province,Jaffna,Jaffna,Northern Province,9.66845,80.00742,28,p2,28,79,4.72,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Northern Province,Kilinochchi,Kilinochchi,Northern Province,9.3961,80.3982,67,p2,27,84,3.06,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Northern Province,Mulliyavalai,Mulliyavalai,Northern Province,9.2186,80.7671,44,p2,27,85,1.39,1012
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Sabaragamuwa,Kalawana,Kalawana,Sabaragamuwa,6.4562,80.4504,44,p2,22,96,1.39,1023
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Sabaragamuwa,Ratnapura,Ratnapura,Sabaragamuwa,6.68278,80.39917,66,p2,25,95,0.28,983
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Southern,Ambalangoda,Ambalangoda,Southern,6.2355,80.0538,30,p2,28,79,1.94,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Southern,Deniya,Deniya,Southern,6.14041,80.94763,53,p2,27,83,4.72,1013
+2026-10-18T21:24:05+05:30,2026-10-18T18:30,Southern,Galle,Galle,Southern,6.0367,80.217,84,p2,28,83,1.94,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Uva,Ella Town,Ella Town,Uva,6.8756,81.0463,68,p2,20,90,1.94,1045
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Uva,Monaragala,Monaragala,Uva,6.8714,81.3487,60,p2,26,83,1.11,1000
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Western,Battaramulla,Battaramulla,Western,6.886626,79.938534,86,p2,27,81,1.67,1015
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Western,Colombo,Colombo,Western,6.909445,79.87534,44,p2,28,81,1.67,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Western,Gampaha,Gampaha,Western,7.0897,79.9925,69,p2,26,88,0.83,1011
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Western,Negombo,Negombo,Western,7.2083,79.8358,17,p2,28,77,3.33,1013
+2026-10-18T21:24:05+05:30,2026-10-18T20:30,Western,Nugegoda,Nugegoda,Western,6.87485,79.89345,38,p2,28,81,1.67,1013
